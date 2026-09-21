@@ -41,23 +41,43 @@ export default function KPICard(props: KPICardProps) {
 
   return (
     <motion.div 
-      variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-      className="kpi-card flex flex-col justify-between"
+      variants={{
+        hidden: { opacity: 0, y: 25, scale: 0.96 },
+        show: { 
+          opacity: 1, 
+          y: 0, 
+          scale: 1,
+          transition: { type: "spring", stiffness: 150, damping: 18 }
+        }
+      }}
+      whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.2 } }}
+      className="kpi-card flex flex-col justify-between group relative overflow-hidden cursor-pointer"
     >
-      <div className="flex justify-between items-start mb-2">
-        <h3 className="text-sm font-medium text-slate-400">{kpi.label}</h3>
-        <div className={clsx("w-2 h-2 rounded-full mt-1.5", 
-          kpi.status === 'good' ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]' :
-          kpi.status === 'warning' ? 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.5)]' :
-          'bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.5)]'
-        )} />
+      {/* Subtle hover specular sheen */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+
+      <div className="flex justify-between items-start mb-2 relative z-10">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400 group-hover:text-slate-200 transition-colors">{kpi.label}</h3>
+        <div className="relative flex items-center justify-center">
+          <div className={clsx("w-2.5 h-2.5 rounded-full relative z-10", 
+            kpi.status === 'good' ? 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]' :
+            kpi.status === 'warning' ? 'bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.8)]' :
+            'bg-red-400 shadow-[0_0_10px_rgba(248,113,113,0.8)]'
+          )} />
+          <div className={clsx("absolute w-2.5 h-2.5 rounded-full animate-radar-ping", 
+            kpi.status === 'good' ? 'bg-emerald-400' :
+            kpi.status === 'warning' ? 'bg-amber-400' :
+            'bg-red-400'
+          )} />
+        </div>
       </div>
       
-      <div className="flex items-baseline mb-4">
-        <span className="text-3xl font-bold text-slate-100 font-mono tracking-tight">
+      <div className="flex items-baseline mb-4 relative z-10">
+        <span className="text-3xl font-extrabold text-slate-100 font-mono tracking-tight group-hover:text-cyan-300 transition-colors">
           {typeof displayVal === 'number' ? <AnimatedCounter value={displayVal} /> : displayVal}
         </span>
-        {kpi.unit && <span className="ml-1 text-sm font-medium text-slate-500">{kpi.unit}</span>}
+        {kpi.unit && <span className="ml-1.5 text-xs font-medium text-slate-400">{kpi.unit}</span>}
+
       </div>
       
       <div className="flex items-center justify-between mt-auto">

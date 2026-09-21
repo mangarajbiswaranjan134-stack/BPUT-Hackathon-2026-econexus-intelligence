@@ -79,68 +79,78 @@ export default function Sidebar() {
           </div>
         )}
 
-        <nav className="px-2 space-y-1 mt-4">
+        <nav className="px-2 space-y-1.5 mt-4">
           {navItems.filter(filterRoles).map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => clsx(
-                "flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 group relative",
-                isActive 
-                  ? "bg-blue-500/10 text-blue-400" 
-                  : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
-              )}
-            >
-              {({ isActive }) => (
-                <>
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNavIndicator"
-                      className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r-full"
-                    />
-                  )}
-                  <item.icon size={20} className="shrink-0" />
-                  {sidebarOpen && (
-                    <span className="ml-3 text-sm font-medium whitespace-nowrap">{item.label}</span>
-                  )}
-                </>
-              )}
-            </NavLink>
+            <motion.div key={item.path} whileHover={{ x: 4 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15 }}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) => clsx(
+                  "flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group relative",
+                  isActive 
+                    ? "bg-gradient-to-r from-blue-500/20 to-indigo-500/10 text-blue-400 border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.15)]" 
+                    : "text-slate-400 hover:bg-slate-800/80 hover:text-slate-200"
+                )}
+              >
+                {({ isActive }) => (
+                  <>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNavIndicator"
+                        className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-gradient-to-b from-blue-400 to-indigo-500 rounded-r-full shadow-[0_0_8px_rgba(59,130,246,0.8)]"
+                      />
+                    )}
+                    <item.icon size={20} className={clsx("shrink-0 transition-transform group-hover:scale-110", isActive && "text-blue-400")} />
+                    {sidebarOpen && (
+                      <span className="ml-3 text-sm font-medium whitespace-nowrap">{item.label}</span>
+                    )}
+                  </>
+                )}
+              </NavLink>
+            </motion.div>
           ))}
           
           {actionItems.filter(filterRoles).length > 0 && (
-            <div className="my-4 pt-4 border-t border-slate-800/50 px-3">
-              {sidebarOpen && <p className="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wider">Tools & Admin</p>}
+            <div className="my-4 pt-4 border-t border-slate-800/60 px-3">
+              {sidebarOpen && <p className="text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-widest">Decision Tools & AI</p>}
             </div>
           )}
           
           {actionItems.filter(filterRoles).map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => clsx(
-                "flex items-center px-3 py-2.5 rounded-lg transition-all duration-200 group relative",
-                isActive 
-                  ? "bg-blue-500/10 text-blue-400" 
-                  : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
-              )}
-            >
-              {({ isActive }) => (
-                <>
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNavIndicator"
-                      className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500 rounded-r-full"
-                    />
-                  )}
-                  <item.icon size={20} className="shrink-0" />
-                  {sidebarOpen && (
-                    <span className="ml-3 text-sm font-medium whitespace-nowrap">{item.label}</span>
-                  )}
-                </>
-              )}
-            </NavLink>
+            <motion.div key={item.path} whileHover={{ x: 4 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15 }}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) => clsx(
+                  "flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group relative",
+                  isActive 
+                    ? "bg-gradient-to-r from-purple-500/20 to-pink-500/10 text-purple-300 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.15)]" 
+                    : "text-slate-400 hover:bg-slate-800/80 hover:text-slate-200"
+                )}
+              >
+                {({ isActive }) => (
+                  <>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNavIndicator"
+                        className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-gradient-to-b from-purple-400 to-pink-500 rounded-r-full shadow-[0_0_8px_rgba(168,85,247,0.8)]"
+                      />
+                    )}
+                    <item.icon size={20} className={clsx("shrink-0 transition-transform group-hover:scale-110", isActive && "text-purple-400")} />
+                    {sidebarOpen && (
+                      <div className="ml-3 flex items-center justify-between w-full">
+                        <span className="text-sm font-medium whitespace-nowrap">{item.label}</span>
+                        {item.path === '/copilot' && (
+                          <span className="text-[9px] font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-white px-1.5 py-0.5 rounded-full uppercase animate-pulse">
+                            AI
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </>
+                )}
+              </NavLink>
+            </motion.div>
           ))}
+
         </nav>
       </div>
 

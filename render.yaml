@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: econexus-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHONPATH
+        value: .
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: MAP_API_KEY
+        sync: false
+      - key: MAP_PROVIDER
+        value: google
+      - key: DATABASE_URL
+        value: sqlite:///./econexus.db

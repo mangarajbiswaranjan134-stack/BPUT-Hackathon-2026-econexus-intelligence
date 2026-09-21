@@ -69,6 +69,17 @@ app.include_router(csv_upload_router)
 app.include_router(settings_router)
 app.include_router(simulation_router)
 
+@app.get('/')
+def root():
+    return {
+        'service': 'EcoNexus Intelligence API',
+        'status': 'online',
+        'version': '1.0.0',
+        'docs_url': '/docs',
+        'health_url': '/api/health'
+    }
+
 @app.get('/api/health')
 def health():
     return {'status': 'ok', 'version': '1.0.0'}
+

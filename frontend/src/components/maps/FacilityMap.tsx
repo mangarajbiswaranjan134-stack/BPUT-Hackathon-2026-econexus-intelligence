@@ -47,6 +47,21 @@ const getMarkerIcon = (type: string, severity?: string, label?: string, value?: 
       color = '#ef4444'; badgeIcon = '🛡️'; pulse = true; break;
     case 'asset':
       color = '#06b6d4'; badgeIcon = '⚙️'; break;
+    case 'biodiversity':
+    case 'tree':
+      color = '#10b981'; badgeIcon = '🌳'; break;
+    case 'soil':
+    case 'land':
+      color = '#f59e0b'; badgeIcon = '🌱'; break;
+    case 'noise':
+    case 'acoustic':
+      color = '#ef4444'; badgeIcon = '📢'; break;
+    case 'community':
+    case 'social':
+      color = '#3b82f6'; badgeIcon = '🤝'; break;
+    case 'disaster':
+    case 'flood':
+      color = '#dc2626'; badgeIcon = '🚨'; pulse = true; break;
   }
 
   const html = `

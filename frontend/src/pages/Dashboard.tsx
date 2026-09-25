@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../api/client';
 import { format } from 'date-fns';
 import { useAppStore } from '../stores/appStore';
@@ -13,11 +14,13 @@ import StatusBadge from '../components/common/StatusBadge';
 import {
   AlertTriangle, TrendingUp, Info, Activity,
   ShieldAlert, Brain, ChevronRight, Zap, Droplets, Trash2,
-  Wind, BarChart3, Target, Sun, Volume2, VolumeX, Mic
+  Wind, BarChart3, Target, Sun, Volume2, VolumeX, Mic,
+  Trees, Mountain, Users, Sprout
 } from 'lucide-react';
 import { voiceService } from '../utils/voiceService';
 
 const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState<DashboardSummary | null>(null);
   const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const [actions, setActions] = useState<Action[]>([]);
@@ -256,6 +259,88 @@ const Dashboard: React.FC = () => {
         {data.kpis.filter(k => k.id !== 'sustainability').map((kpi) => (
           <KPICard key={kpi.id} kpi={kpi} />
         ))}
+      </motion.div>
+
+      {/* EIA Impact & Ecology Intelligence Showcase */}
+      <motion.div variants={itemVariants} className="space-y-2.5">
+        <div className="flex justify-between items-center px-1">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-red-400 flex items-center">
+            <Trees size={14} className="mr-1.5" /> Environmental & Social Impact Assessment (EIA) Modules
+          </h2>
+          <span className="text-[11px] text-slate-500 font-mono">5 Specialized Intelligence Consoles</span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+          <motion.div
+            whileHover={{ scale: 1.02, y: -2 }}
+            onClick={() => navigate('/biodiversity')}
+            className="p-3.5 bg-slate-950/80 border border-emerald-500/30 hover:border-emerald-500/60 rounded-xl cursor-pointer group transition-all relative overflow-hidden"
+          >
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs font-bold text-white group-hover:text-emerald-300 flex items-center">
+                <Trees size={15} className="mr-1.5 text-emerald-400" /> Biodiversity & Trees
+              </span>
+              <ChevronRight size={13} className="text-slate-500 group-hover:text-white transition" />
+            </div>
+            <div className="text-[11px] text-slate-400">38.6% Green Cover &bull; 428 Trees &bull; 142 T Carbon</div>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.02, y: -2 }}
+            onClick={() => navigate('/land-soil')}
+            className="p-3.5 bg-slate-950/80 border border-amber-500/30 hover:border-amber-500/60 rounded-xl cursor-pointer group transition-all relative overflow-hidden"
+          >
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs font-bold text-white group-hover:text-amber-300 flex items-center">
+                <Mountain size={15} className="mr-1.5 text-amber-400" /> Land & Soil Health
+              </span>
+              <ChevronRight size={13} className="text-slate-500 group-hover:text-white transition" />
+            </div>
+            <div className="text-[11px] text-slate-400">84.6 Soil Index &bull; pH 6.8 &bull; Heavy Metals Safe</div>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.02, y: -2 }}
+            onClick={() => navigate('/noise')}
+            className="p-3.5 bg-slate-950/80 border border-red-500/30 hover:border-red-500/60 rounded-xl cursor-pointer group transition-all relative overflow-hidden"
+          >
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs font-bold text-white group-hover:text-red-300 flex items-center">
+                <Volume2 size={15} className="mr-1.5 text-red-400" /> Noise Compliance
+              </span>
+              <ChevronRight size={13} className="text-slate-500 group-hover:text-white transition" />
+            </div>
+            <div className="text-[11px] text-slate-400">52.4 dB &bull; 96.8% Compliant &bull; Clinic Silent Safe</div>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.02, y: -2 }}
+            onClick={() => navigate('/community')}
+            className="p-3.5 bg-slate-950/80 border border-blue-500/30 hover:border-blue-500/60 rounded-xl cursor-pointer group transition-all relative overflow-hidden"
+          >
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs font-bold text-white group-hover:text-blue-300 flex items-center">
+                <Users size={15} className="mr-1.5 text-blue-400" /> Community & Grievance
+              </span>
+              <ChevronRight size={13} className="text-slate-500 group-hover:text-white transition" />
+            </div>
+            <div className="text-[11px] text-slate-400">87.4% Satisfaction &bull; 78.5% Positive &bull; 4.2h SLA</div>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.02, y: -2 }}
+            onClick={() => navigate('/disaster-risk')}
+            className="p-3.5 bg-slate-950/80 border border-rose-500/30 hover:border-rose-500/60 rounded-xl cursor-pointer group transition-all relative overflow-hidden"
+          >
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs font-bold text-white group-hover:text-rose-300 flex items-center">
+                <ShieldAlert size={15} className="mr-1.5 text-rose-400" /> Disaster Risk SOPs
+              </span>
+              <ChevronRight size={13} className="text-slate-500 group-hover:text-white transition" />
+            </div>
+            <div className="text-[11px] text-slate-400">Minimal Flood &bull; 8/8 Sirens &bull; Seismic BIS-1893 Safe</div>
+          </motion.div>
+        </div>
       </motion.div>
 
       {/* Domain Filters & Main Content */}

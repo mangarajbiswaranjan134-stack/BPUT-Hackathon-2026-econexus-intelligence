@@ -1,7 +1,8 @@
 import { 
   DashboardSummary, EnergyData, WaterData, WasteData, 
   AirQualityData, TrafficData, AssetData, SafetyData, 
-  Anomaly, Action, CopilotResponse, ForecastResult, ScenarioResult, SustainabilityScore
+  Anomaly, Action, CopilotResponse, ForecastResult, ScenarioResult, SustainabilityScore,
+  BiodiversityData, SoilLandData, NoiseData, CommunitySocialData, DisasterRiskData
 } from '../types';
 
 export const mockFacility = {
@@ -104,6 +105,36 @@ export const mockActions: Action[] = [
     status: 'in_progress',
     created_at: new Date().toISOString(),
     metric: 'waste'
+  },
+  {
+    id: 'act-03',
+    priority: 'high',
+    problem: 'Main Gate traffic bottleneck between 08:30 and 09:15 AM causing localized PM2.5 & noise spike',
+    who: 'Campus Security & Traffic Operations',
+    what: 'Reroute incoming supply trucks & waste haulers to North Gate B bypass during morning peak',
+    where: 'Main Gate & Quadrangle Access',
+    when: '08:15 AM Daily',
+    why: 'Decouple commercial logistics from student morning rush to cut noise and tailpipe pollution',
+    expected_impact: 'Eliminates 22 min queue idling; reduces localized PM2.5 by 14% and noise by 5 dB',
+    confidence: 0.89,
+    status: 'new',
+    created_at: new Date().toISOString(),
+    metric: 'traffic'
+  },
+  {
+    id: 'act-04',
+    priority: 'medium',
+    problem: 'Water pumping operating on morning grid tariff instead of midday rooftop solar peak',
+    who: 'Campus Utilities & Facilities Team',
+    what: 'Reschedule overhead water reservoir pump cycle to 11:30 AM - 13:30 PM solar generation window',
+    where: 'Utilities Pump House #02',
+    when: 'Automated SCADA Schedule',
+    why: 'Utilize 100% rooftop solar generation (42.5 kW) to displace grid tariff charges',
+    expected_impact: 'Saves ₹6,800/week in grid electricity costs and 320 kg CO2 emissions',
+    confidence: 0.94,
+    status: 'new',
+    created_at: new Date().toISOString(),
+    metric: 'water'
   }
 ];
 
@@ -302,3 +333,155 @@ export const mockSustainabilityScore: SustainabilityScore = {
     { name: 'Operational Asset Uptime', score: 79.0, weight: 0.20, description: 'Preventative maintenance adherence' }
   ]
 };
+
+export const mockBiodiversityData: BiodiversityData = {
+  green_cover_pct: 38.6,
+  tree_count: 428,
+  carbon_sequestered_tons: 142.8,
+  species_diversity_index: 3.42, // Shannon-Wiener index
+  habitat_disturbance_score: 18.2, // out of 100 (lower is better)
+  canopy_growth_rate: 4.8, // % YoY
+  history: [
+    { timestamp: '2026-04', green_cover: 35.1, disturbance: 24.0 },
+    { timestamp: '2026-05', green_cover: 36.0, disturbance: 22.5 },
+    { timestamp: '2026-06', green_cover: 36.8, disturbance: 21.0 },
+    { timestamp: '2026-07', green_cover: 37.4, disturbance: 19.8 },
+    { timestamp: '2026-08', green_cover: 38.1, disturbance: 19.0 },
+    { timestamp: '2026-09', green_cover: 38.6, disturbance: 18.2 },
+  ],
+  trees: [
+    { id: 'tr-01', species: 'Azadirachta indica', common_name: 'Neem Tree', age_years: 18, height_m: 12.4, carbon_seq_kg: 520, health: 'excellent', lat: 20.2970, lng: 85.8252, tag_id: 'TREE-NEEM-01' },
+    { id: 'tr-02', species: 'Ficus religiosa', common_name: 'Peepal', age_years: 25, height_m: 16.2, carbon_seq_kg: 1240, health: 'excellent', lat: 20.2955, lng: 85.8238, tag_id: 'TREE-PEEP-02' },
+    { id: 'tr-03', species: 'Mangifera indica', common_name: 'Mango Tree', age_years: 12, height_m: 8.5, carbon_seq_kg: 340, health: 'good', lat: 20.2965, lng: 85.8260, tag_id: 'TREE-MANG-03' },
+    { id: 'tr-04', species: 'Delonix regia', common_name: 'Gulmohar', age_years: 9, height_m: 7.2, carbon_seq_kg: 210, health: 'good', lat: 20.2980, lng: 85.8240, tag_id: 'TREE-GULM-04' },
+    { id: 'tr-05', species: 'Saraca asoca', common_name: 'Ashoka Tree', age_years: 6, height_m: 5.1, carbon_seq_kg: 110, health: 'fair', lat: 20.2950, lng: 85.8250, tag_id: 'TREE-ASHO-05' },
+  ],
+  zones: [
+    { name: 'Botanical Garden & Herbal Reserve', green_pct: 88.5, fauna_count: 34, disturbance_level: 'low', flora_species: ['Neem', 'Tulsi', 'Ashwagandha', 'Amla', 'Bamboo'] },
+    { name: 'Academic Quadrangle Green Belt', green_pct: 62.0, fauna_count: 18, disturbance_level: 'low', flora_species: ['Peepal', 'Gulmohar', 'Banyan'] },
+    { name: 'Hostel Outer Periphery', green_pct: 45.0, fauna_count: 12, disturbance_level: 'moderate', flora_species: ['Subabul', 'Eucalyptus', 'Neem'] },
+    { name: 'Sports Field Buffer Woods', green_pct: 71.5, fauna_count: 26, disturbance_level: 'low', flora_species: ['Cassia', 'Teak', 'Mahogany'] },
+  ],
+  alerts: [
+    "Botanical Grove bio-corridor healthy; bird nesting activity stable (+14%).",
+    "Minor canopy pruning recommended along Block B overhead electrical line."
+  ]
+};
+
+export const mockSoilLandData: SoilLandData = {
+  soil_health_index: 84.6,
+  avg_ph: 6.8, // optimal neutral
+  heavy_metal_risk: 'low',
+  moisture_pct: 28.4,
+  organic_carbon_pct: 1.85,
+  npk_rating: 'Balanced (Grade A)',
+  construction_area_pct: 34.2,
+  green_zone_pct: 48.6,
+  permeable_surface_pct: 61.4,
+  history: [
+    { timestamp: '2026-05', ph: 6.7, moisture: 22.0, health: 81.2 },
+    { timestamp: '2026-06', ph: 6.7, moisture: 34.0, health: 83.0 },
+    { timestamp: '2026-07', ph: 6.8, moisture: 36.5, health: 85.1 },
+    { timestamp: '2026-08', ph: 6.9, moisture: 31.0, health: 84.8 },
+    { timestamp: '2026-09', ph: 6.8, moisture: 28.4, health: 84.6 },
+  ],
+  sampling_points: [
+    { id: 'sp-01', location: 'Chemistry Lab Rear Drainage Soil', lat: 20.2968, lng: 85.8241, ph: 6.9, lead_ppm: 4.2, cadmium_ppm: 0.12, moisture: 29.1, nitrogen_level: 'Adequate', status: 'healthy' },
+    { id: 'sp-02', location: 'Hostel Mess Organic Composting Pit', lat: 20.2952, lng: 85.8235, ph: 7.1, lead_ppm: 1.8, cadmium_ppm: 0.05, moisture: 42.0, nitrogen_level: 'High (Rich)', status: 'healthy' },
+    { id: 'sp-03', location: 'Central Sports Field Turf', lat: 20.2975, lng: 85.8258, ph: 6.6, lead_ppm: 2.1, cadmium_ppm: 0.08, moisture: 26.5, nitrogen_level: 'Adequate', status: 'healthy' },
+    { id: 'sp-04', location: 'Workshop & Innovation Yard', lat: 20.2960, lng: 85.8262, ph: 6.4, lead_ppm: 12.4, cadmium_ppm: 0.45, moisture: 19.8, nitrogen_level: 'Moderate', status: 'caution' },
+  ],
+  land_use_changes: [
+    { period: '2024 - 2025', green_loss_sqm: 1200, constructed_sqm: 2400, afforestation_sqm: 3600 },
+    { period: '2025 - 2026 (YTD)', green_loss_sqm: 450, constructed_sqm: 800, afforestation_sqm: 2200 },
+  ]
+};
+
+export const mockNoiseData: NoiseData = {
+  current_db: 52.4,
+  daytime_avg_db: 58.2,
+  nighttime_avg_db: 41.5,
+  peak_db: 74.2,
+  compliance_rate_pct: 96.8,
+  active_violations: 0,
+  history: Array.from({ length: 24 }, (_, i) => {
+    const isDay = i >= 6 && i <= 21;
+    const base = isDay ? 55 : 40;
+    const val = base + Math.sin(i / 2) * 8 + (Math.random() * 4);
+    return {
+      timestamp: `${String(i).padStart(2, '0')}:00`,
+      value: Math.round(val * 10) / 10,
+      limit: isDay ? 65 : 50
+    };
+  }),
+  sensitive_zones: [
+    { id: 'nz-01', name: 'Campus Health Center & Clinic', type: 'hospital', limit_db: 50, current_db: 43.2, peak_today_db: 48.0, status: 'compliant', lat: 20.2958, lng: 85.8242 },
+    { id: 'nz-02', name: 'Central Library Silent Zone', type: 'school', limit_db: 45, current_db: 38.6, peak_today_db: 44.1, status: 'compliant', lat: 20.2964, lng: 85.8239 },
+    { id: 'nz-03', name: 'Main Academic Lecture Theatres', type: 'school', limit_db: 50, current_db: 49.1, peak_today_db: 56.4, status: 'compliant', lat: 20.2961, lng: 85.8245 },
+    { id: 'nz-04', name: 'Hostel Complex Residential Area', type: 'hostel', limit_db: 45, current_db: 42.0, peak_today_db: 51.2, status: 'compliant', lat: 20.2950, lng: 85.8230 },
+    { id: 'nz-05', name: 'Mechanical FabLab & Workshop', type: 'industrial', limit_db: 75, current_db: 66.8, peak_today_db: 74.2, status: 'compliant', lat: 20.2960, lng: 85.8262 },
+  ],
+  compliance_alerts: [
+    { id: 'na-01', location: 'Mechanical Workshop Gate B', decibel: 76.5, limit: 75.0, duration_min: 4, timestamp: '11:24 AM', severity: 'moderate' }
+  ]
+};
+
+export const mockCommunitySocialData: CommunitySocialData = {
+  community_satisfaction_index: 87.4, // out of 100
+  sentiment_positive_pct: 78.5,
+  sentiment_neutral_pct: 15.2,
+  sentiment_negative_pct: 6.3,
+  open_grievances: 2,
+  resolved_grievances: 48,
+  avg_resolution_hours: 4.2,
+  health_indicators: {
+    respiratory_health_risk: 'low',
+    heat_strain_index: 32, // out of 100 (comfortable)
+    drinking_water_safety_pct: 99.4,
+    acoustic_comfort_pct: 92.0,
+    campus_walkability_score: 89.0
+  },
+  heritage_and_cultural: [
+    { name: 'Heritage Banyan Shrine & Heritage Memorial', type: 'Cultural Reserve', conservation_status: 'Protected (Class A)', integrity_pct: 98.5, buffer_zone_cleared: true },
+    { name: 'Founder Commemorative Arch (1962)', type: 'Architectural Heritage', conservation_status: 'Preserved', integrity_pct: 95.0, buffer_zone_cleared: true }
+  ],
+  grievances: [
+    { id: 'grv-101', category: 'Noise', title: 'Generator noise audible near Girls Hostel during study hours', sentiment: 'negative', status: 'in_progress', submitted_by: 'Hostel Resident', timestamp: '2026-09-24 19:40', location: 'Hostel Alpha Wing C', ai_priority: 'high', ai_solution_summary: 'Schedule generator load test to 14:00-15:00 window. Acoustic baffles inspected.' },
+    { id: 'grv-102', category: 'Waste', title: 'Recycling bin full outside Cafeteria Pavilion', sentiment: 'neutral', status: 'open', submitted_by: 'Campus Visitor', timestamp: '2026-09-25 12:15', location: 'Cafeteria Court', ai_priority: 'medium', ai_solution_summary: 'Automated dispatch sent to custodial team. Expected clearance in 20 min.' },
+    { id: 'grv-103', category: 'Air Quality', title: 'Appreciation: Clean air and lush green canopy on academic walkway', sentiment: 'positive', status: 'resolved', submitted_by: 'Faculty Member', timestamp: '2026-09-23 09:10', location: 'Academic Quadrangle', ai_priority: 'low', ai_solution_summary: 'Feedback recorded into Community Satisfaction Index.' }
+  ],
+  sentiment_history: [
+    { timestamp: 'May', positive: 72, neutral: 20, negative: 8 },
+    { timestamp: 'Jun', positive: 74, neutral: 18, negative: 8 },
+    { timestamp: 'Jul', positive: 76, neutral: 17, negative: 7 },
+    { timestamp: 'Aug', positive: 77, neutral: 16, negative: 7 },
+    { timestamp: 'Sep', positive: 79, neutral: 15, negative: 6 },
+  ]
+};
+
+export const mockDisasterRiskData: DisasterRiskData = {
+  composite_risk_score: 16.5, // 0-100 (lower is safer)
+  flood_risk_level: 'minimal',
+  heatwave_wbgt_c: 27.2,
+  heatwave_category: 'Caution',
+  seismic_resilience_rating: 'Zone III Compliant (Safe)',
+  emergency_readiness_pct: 96.0,
+  sirens_operational: 8,
+  total_sirens: 8,
+  evacuation_routes_clear_pct: 98.5,
+  hospital_bed_capacity_pct: 82.0,
+  waterlogging_hotspots: [
+    { id: 'wl-01', zone: 'East Gate Low-Lying Culvert', water_depth_cm: 2.0, drain_blockage_pct: 5, risk: 'low', lat: 20.2945, lng: 85.8270 },
+    { id: 'wl-02', zone: 'Hostel Quadrangle Storm Drain', water_depth_cm: 1.5, drain_blockage_pct: 0, risk: 'low', lat: 20.2951, lng: 85.8232 },
+  ],
+  emergency_protocols: [
+    { protocol: 'Flash Flood & Inundation Protocol', status: 'ready', last_drill: '2026-07-15', responsible_team: 'Campus Civil Maintenance', contact: '+91 94370 12345' },
+    { protocol: 'Heatwave & Dehydration Action Plan', status: 'active', last_drill: '2026-05-10', responsible_team: 'Health Center Medical Team', contact: '+91 94370 23456' },
+    { protocol: 'Seismic & Structural Evacuation Code', status: 'ready', last_drill: '2026-08-20', responsible_team: 'Disaster Rapid Action Force', contact: '+91 94370 34567' },
+    { protocol: 'Fire & Chemical Hazard Isolation', status: 'ready', last_drill: '2026-09-02', responsible_team: 'Safety & Security Command', contact: '+91 94370 45678' }
+  ],
+  active_disaster_alerts: [
+    { id: 'da-01', type: 'heatwave', severity: 'warning', title: 'WBGT Advisory: Moderate Heat Index', instruction: 'Keep campus hydration coolers active between 12:00 and 15:00. Sports outdoor drills suspended.', timestamp: '12:00 PM' }
+  ]
+};
+

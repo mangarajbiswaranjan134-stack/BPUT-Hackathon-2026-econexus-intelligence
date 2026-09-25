@@ -2,14 +2,16 @@ import {
   DashboardSummary, KPI, EnergyData, ForecastResult, Anomaly, 
   WaterData, WasteData, AirQualityData, TrafficData, AssetData, 
   SafetyData, ScenarioInput, ScenarioResult, Action, CopilotResponse,
-  SustainabilityScore, IntegrationStatus, FacilityConfig, SimulationState 
+  SustainabilityScore, IntegrationStatus, FacilityConfig, SimulationState,
+  BiodiversityData, SoilLandData, NoiseData, CommunitySocialData, DisasterRiskData, GrievanceTicket
 } from '../types';
 
 import {
   mockDashboardSummary, mockKPIs, mockEnergyData, mockWaterData,
   mockWasteData, mockAirQualityData, mockTrafficData, mockAssetData,
   mockSafetyData, mockAnomalies, mockActions, mockForecast,
-  mockCopilotResponse, mockScenarioResult, mockSustainabilityScore, mockFacility
+  mockCopilotResponse, mockScenarioResult, mockSustainabilityScore, mockFacility,
+  mockBiodiversityData, mockSoilLandData, mockNoiseData, mockCommunitySocialData, mockDisasterRiskData
 } from './mockData';
 
 const BASE = (import.meta as any).env?.VITE_API_BASE_URL || '/api';
@@ -78,6 +80,39 @@ export const api = {
   getSafety: () => withFallback(() => fetchJSON<SafetyData>('/safety/'), mockSafetyData),
   getSafetyInsight: () => withFallback(() => fetchJSON<Record<string, unknown>>('/safety/insight'), mockCopilotResponse("Safety insight") as unknown as Record<string, unknown>),
   
+  // Biodiversity & Ecology
+  getBiodiversity: () => withFallback(() => fetchJSON<BiodiversityData>('/biodiversity/'), mockBiodiversityData),
+
+  // Land & Soil Health
+  getSoilLand: () => withFallback(() => fetchJSON<SoilLandData>('/soil/'), mockSoilLandData),
+
+  // Noise Pollution & Acoustic Compliance
+  getNoise: () => withFallback(() => fetchJSON<NoiseData>('/noise/'), mockNoiseData),
+
+  // Community & Social Impact (Grievance Redressal & Sentiment AI)
+  getCommunitySocial: () => withFallback(() => fetchJSON<CommunitySocialData>('/community/'), mockCommunitySocialData),
+  submitGrievance: async (ticket: Partial<GrievanceTicket>): Promise<GrievanceTicket> => {
+    try {
+      return await fetchJSON<GrievanceTicket>('/community/grievance', { method: 'POST', body: JSON.stringify(ticket) });
+    } catch {
+      return {
+        id: `grv-${Date.now().toString().slice(-4)}`,
+        category: ticket.category || 'General',
+        title: ticket.title || 'Community Observation',
+        sentiment: ticket.sentiment || 'neutral',
+        status: 'open',
+        submitted_by: ticket.submitted_by || 'Campus Member',
+        timestamp: new Date().toISOString().replace('T', ' ').slice(0, 16),
+        location: ticket.location || 'Campus Center',
+        ai_priority: ticket.ai_priority || 'medium',
+        ai_solution_summary: 'Automated ticket logged. Dispatch alert generated for facility supervisor.'
+      };
+    }
+  },
+
+  // Disaster & Risk Management
+  getDisasterRisk: () => withFallback(() => fetchJSON<DisasterRiskData>('/disaster/'), mockDisasterRiskData),
+
   // Anomalies
   getAnomalies: (metric?: string) => withFallback(
     () => fetchJSON<Anomaly[]>(`/anomalies/${metric ? `?metric=${metric}` : ''}`),

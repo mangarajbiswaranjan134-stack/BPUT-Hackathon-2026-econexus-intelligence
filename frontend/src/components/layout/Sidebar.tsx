@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, Zap, Droplets, Trash2, Wind, Car, Server, 
   ShieldAlert, Bot, FlaskConical, ListChecks, FileText, Upload, 
-  Settings, ChevronLeft, ChevronRight, ChevronDown 
+  Settings, ChevronLeft, ChevronRight, ChevronDown, Trees, Mountain, Volume2, Users
 } from 'lucide-react';
 import { useAppStore } from '../../stores/appStore';
 import { UserRole } from '../../types';
@@ -19,6 +19,14 @@ const navItems = [
   { path: '/traffic', label: 'Traffic & Parking', icon: Car, roles: ['admin', 'operations'] },
   { path: '/assets', label: 'Assets', icon: Server, roles: ['admin', 'operations'] },
   { path: '/safety', label: 'Safety', icon: ShieldAlert, roles: ['admin', 'operations'] },
+];
+
+const eiaItems = [
+  { path: '/biodiversity', label: 'Biodiversity & Trees', icon: Trees, roles: ['admin', 'sustainability'] },
+  { path: '/land-soil', label: 'Land & Soil Health', icon: Mountain, roles: ['admin', 'sustainability'] },
+  { path: '/noise', label: 'Noise Compliance', icon: Volume2, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/community', label: 'Community & Social', icon: Users, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/disaster-risk', label: 'Disaster & Emergency', icon: ShieldAlert, roles: ['admin', 'operations'] },
 ];
 
 const actionItems = [
@@ -109,8 +117,43 @@ export default function Sidebar() {
             </motion.div>
           ))}
           
+          {eiaItems.filter(filterRoles).length > 0 && (
+            <div className="my-3 pt-3 border-t border-red-950/50 px-3">
+              {sidebarOpen && <p className="text-[10px] font-black text-red-400/90 mb-2 uppercase tracking-widest flex items-center"><Trees size={12} className="mr-1.5" /> EIA & Ecology</p>}
+            </div>
+          )}
+
+          {eiaItems.filter(filterRoles).map((item) => (
+            <motion.div key={item.path} whileHover={{ x: 4 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.15 }}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) => clsx(
+                  "flex items-center px-3 py-2 rounded-xl transition-all duration-200 group relative",
+                  isActive 
+                    ? "bg-gradient-to-r from-red-600/25 via-red-950/20 to-transparent text-white border border-red-500/40 shadow-[0_0_15px_rgba(239,68,68,0.25)] font-semibold" 
+                    : "text-zinc-400 hover:bg-red-950/30 hover:text-white"
+                )}
+              >
+                {({ isActive }) => (
+                  <>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNavIndicator"
+                        className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-gradient-to-b from-white to-red-600 rounded-r-full shadow-[0_0_12px_rgba(255,23,68,1)]"
+                      />
+                    )}
+                    <item.icon size={18} className={clsx("shrink-0 transition-transform group-hover:scale-110", isActive ? "text-red-400" : "text-zinc-400 group-hover:text-red-400")} />
+                    {sidebarOpen && (
+                      <span className="ml-3 text-xs whitespace-nowrap">{item.label}</span>
+                    )}
+                  </>
+                )}
+              </NavLink>
+            </motion.div>
+          ))}
+          
           {actionItems.filter(filterRoles).length > 0 && (
-            <div className="my-4 pt-4 border-t border-red-950/50 px-3">
+            <div className="my-3 pt-3 border-t border-red-950/50 px-3">
               {sidebarOpen && <p className="text-[10px] font-black text-red-400/80 mb-2 uppercase tracking-widest">AI Intelligence & Tools</p>}
             </div>
           )}

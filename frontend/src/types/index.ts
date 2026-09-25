@@ -253,3 +253,173 @@ export interface SimulationState {
 }
 
 export type UserRole = 'admin' | 'operations' | 'sustainability';
+
+export interface TreeData {
+  id: string;
+  species: string;
+  common_name: string;
+  age_years: number;
+  height_m: number;
+  carbon_seq_kg: number;
+  health: 'excellent' | 'good' | 'fair' | 'critical';
+  lat: number;
+  lng: number;
+  tag_id: string;
+}
+
+export interface BiodiversityData {
+  green_cover_pct: number;
+  tree_count: number;
+  carbon_sequestered_tons: number;
+  species_diversity_index: number;
+  habitat_disturbance_score: number;
+  canopy_growth_rate: number;
+  history: Array<{ timestamp: string; green_cover: number; disturbance: number }>;
+  trees: TreeData[];
+  zones: Array<{
+    name: string;
+    green_pct: number;
+    fauna_count: number;
+    disturbance_level: 'low' | 'moderate' | 'high';
+    flora_species: string[];
+  }>;
+  alerts: string[];
+}
+
+export interface SoilLandData {
+  soil_health_index: number;
+  avg_ph: number;
+  heavy_metal_risk: 'low' | 'moderate' | 'elevated' | 'severe';
+  moisture_pct: number;
+  organic_carbon_pct: number;
+  npk_rating: string;
+  construction_area_pct: number;
+  green_zone_pct: number;
+  permeable_surface_pct: number;
+  history: Array<{ timestamp: string; ph: number; moisture: number; health: number }>;
+  sampling_points: Array<{
+    id: string;
+    location: string;
+    lat: number;
+    lng: number;
+    ph: number;
+    lead_ppm: number;
+    cadmium_ppm: number;
+    moisture: number;
+    nitrogen_level: string;
+    status: 'healthy' | 'caution' | 'contaminated';
+  }>;
+  land_use_changes: Array<{
+    period: string;
+    green_loss_sqm: number;
+    constructed_sqm: number;
+    afforestation_sqm: number;
+  }>;
+}
+
+export interface NoiseData {
+  current_db: number;
+  daytime_avg_db: number;
+  nighttime_avg_db: number;
+  peak_db: number;
+  compliance_rate_pct: number;
+  active_violations: number;
+  history: Array<{ timestamp: string; value: number; limit: number }>;
+  sensitive_zones: Array<{
+    id: string;
+    name: string;
+    type: 'hospital' | 'school' | 'hostel' | 'lab' | 'industrial';
+    limit_db: number;
+    current_db: number;
+    peak_today_db: number;
+    status: 'compliant' | 'warning' | 'violation';
+    lat: number;
+    lng: number;
+  }>;
+  compliance_alerts: Array<{
+    id: string;
+    location: string;
+    decibel: number;
+    limit: number;
+    duration_min: number;
+    timestamp: string;
+    severity: 'moderate' | 'high' | 'critical';
+  }>;
+}
+
+export interface GrievanceTicket {
+  id: string;
+  category: 'Air Quality' | 'Noise' | 'Water' | 'Waste' | 'Safety' | 'General';
+  title: string;
+  sentiment: 'positive' | 'neutral' | 'negative' | 'critical';
+  status: 'open' | 'in_progress' | 'resolved';
+  submitted_by: string;
+  timestamp: string;
+  location: string;
+  ai_priority: 'low' | 'medium' | 'high' | 'urgent';
+  ai_solution_summary: string;
+}
+
+export interface CommunitySocialData {
+  community_satisfaction_index: number;
+  sentiment_positive_pct: number;
+  sentiment_neutral_pct: number;
+  sentiment_negative_pct: number;
+  open_grievances: number;
+  resolved_grievances: number;
+  avg_resolution_hours: number;
+  health_indicators: {
+    respiratory_health_risk: 'low' | 'moderate' | 'high';
+    heat_strain_index: number; // 0-100
+    drinking_water_safety_pct: number;
+    acoustic_comfort_pct: number;
+    campus_walkability_score: number;
+  };
+  heritage_and_cultural: Array<{
+    name: string;
+    type: string;
+    conservation_status: string;
+    integrity_pct: number;
+    buffer_zone_cleared: boolean;
+  }>;
+  grievances: GrievanceTicket[];
+  sentiment_history: Array<{ timestamp: string; positive: number; negative: number; neutral: number }>;
+}
+
+export interface DisasterRiskData {
+  composite_risk_score: number;
+  flood_risk_level: 'minimal' | 'moderate' | 'high' | 'severe';
+  heatwave_wbgt_c: number;
+  heatwave_category: 'Normal' | 'Caution' | 'Extreme Caution' | 'Danger';
+  seismic_resilience_rating: string;
+  emergency_readiness_pct: number;
+  sirens_operational: number;
+  total_sirens: number;
+  evacuation_routes_clear_pct: number;
+  hospital_bed_capacity_pct: number;
+  waterlogging_hotspots: Array<{
+    id: string;
+    zone: string;
+    water_depth_cm: number;
+    drain_blockage_pct: number;
+    risk: 'low' | 'moderate' | 'critical';
+    lat: number;
+    lng: number;
+  }>;
+  emergency_protocols: Array<{
+    protocol: string;
+    status: 'ready' | 'active' | 'drilled';
+    last_drill: string;
+    responsible_team: string;
+    contact: string;
+  }>;
+  active_disaster_alerts: Array<{
+    id: string;
+    type: 'flood' | 'heatwave' | 'seismic' | 'cyclone';
+    severity: 'warning' | 'high' | 'critical';
+    title: string;
+    instruction: string;
+    timestamp: string;
+  }>;
+}
+

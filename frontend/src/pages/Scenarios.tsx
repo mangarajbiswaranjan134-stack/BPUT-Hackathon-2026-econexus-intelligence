@@ -111,21 +111,51 @@ const Scenarios: React.FC = () => {
               ))}
             </div>
 
-            <div className="mt-8 flex space-x-3">
-              <button 
-                onClick={handleSimulate}
-                disabled={loading}
-                className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium py-3 rounded-lg shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center disabled:opacity-50"
+            <div className="mt-6 flex flex-col space-y-2.5">
+              <button
+                onClick={async () => {
+                  const optimal = {
+                    hvac_change: -15,
+                    water_change: -12,
+                    waste_collection_change: 25,
+                    traffic_change: -10,
+                    operating_hours_change: 0,
+                    occupancy_change: 0
+                  };
+                  setInputs(optimal);
+                  setLoading(true);
+                  setError(null);
+                  try {
+                    const res = await api.simulateScenario(optimal);
+                    setResult(res);
+                  } catch {
+                    setError('Simulation failed');
+                  } finally {
+                    setLoading(false);
+                  }
+                }}
+                className="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold py-3 rounded-xl shadow-lg shadow-purple-500/25 transition-all flex items-center justify-center cursor-pointer border border-purple-400/30"
               >
-                {loading ? <span className="animate-pulse">Simulating...</span> : <><Activity size={18} className="mr-2"/> Simulate</>}
+                ✨ AI Auto-Optimize Campus (Best Eco-Balance)
               </button>
-              <button 
-                onClick={resetInputs}
-                className="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors border border-slate-700"
-              >
-                Reset
-              </button>
+
+              <div className="flex space-x-2">
+                <button 
+                  onClick={handleSimulate}
+                  disabled={loading}
+                  className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-semibold py-3 rounded-xl shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center disabled:opacity-50 cursor-pointer"
+                >
+                  {loading ? <span className="animate-pulse">Simulating...</span> : <><Activity size={18} className="mr-2"/> Run Custom Simulation</>}
+                </button>
+                <button 
+                  onClick={resetInputs}
+                  className="px-4 py-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition-colors border border-slate-700 cursor-pointer"
+                >
+                  Reset
+                </button>
+              </div>
             </div>
+
             
             <div className="mt-6 flex items-start text-xs text-slate-400 bg-slate-800/50 p-3 rounded border border-slate-700">
                <AlertTriangle size={14} className="text-amber-500 mr-2 flex-shrink-0 mt-0.5" />

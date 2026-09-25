@@ -65,14 +65,17 @@ export default function Layout() {
                 onClick={() => navigate('/copilot')}
                 whileHover={{ scale: 1.08, y: -2 }}
                 whileTap={{ scale: 0.94 }}
-                className="flex items-center space-x-2.5 px-4 py-3 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-medium rounded-full shadow-[0_0_25px_rgba(79,70,229,0.5)] hover:shadow-[0_0_35px_rgba(79,70,229,0.8)] border border-white/20 transition-all cursor-pointer backdrop-blur-md"
+                className="flex items-center space-x-2.5 px-4.5 py-3.5 bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 text-white font-semibold rounded-full shadow-[0_0_30px_rgba(6,182,212,0.5)] hover:shadow-[0_0_40px_rgba(6,182,212,0.8)] border border-cyan-300/40 transition-all cursor-pointer backdrop-blur-md"
               >
                 <div className="relative">
-                  <Bot size={18} className="animate-bounce" style={{ animationDuration: '2.5s' }} />
-                  <Sparkles size={10} className="absolute -top-1 -right-1 text-yellow-300 animate-pulse" />
+                  <Bot size={20} className="animate-bounce" style={{ animationDuration: '2.5s' }} />
+                  <Sparkles size={11} className="absolute -top-1.5 -right-1.5 text-yellow-300 animate-pulse" />
                 </div>
-                <span className="text-xs font-semibold tracking-wide">Ask Gemini AI Copilot</span>
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                <span className="text-xs font-bold tracking-wide">🎙️ Voice AI Copilot</span>
+                <span className="flex space-x-0.5 items-center">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-300" />
+                </span>
               </motion.button>
             </motion.div>
           )}

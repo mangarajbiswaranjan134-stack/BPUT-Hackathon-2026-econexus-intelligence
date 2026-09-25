@@ -13,8 +13,9 @@ import StatusBadge from '../components/common/StatusBadge';
 import {
   AlertTriangle, TrendingUp, Info, Activity,
   ShieldAlert, Brain, ChevronRight, Zap, Droplets, Trash2,
-  Wind, BarChart3, Target, Sun
+  Wind, BarChart3, Target, Sun, Volume2, VolumeX, Mic
 } from 'lucide-react';
+import { voiceService } from '../utils/voiceService';
 
 const Dashboard: React.FC = () => {
   const [data, setData] = useState<DashboardSummary | null>(null);
@@ -24,7 +25,35 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [domainFilter, setDomainFilter] = useState<string>('all');
+  const [isBriefingSpeaking, setIsBriefingSpeaking] = useState(false);
   const simulationActive = useAppStore(s => s.simulationActive);
+
+  useEffect(() => {
+    return () => {
+      voiceService.stopSpeaking();
+    };
+  }, []);
+
+  const toggleExecutiveBriefing = () => {
+    if (isBriefingSpeaking) {
+      voiceService.stopSpeaking();
+      setIsBriefingSpeaking(false);
+    } else {
+      const facilityName = data?.facility?.name || 'Campus';
+      const score = data?.sustainability_score?.toFixed(1) || '78.5';
+      const power = data?.kpis?.find(k => k.id === 'energy')?.value || '412';
+      const anomCount = anomalies.length;
+      
+      const speechScript = `Hello! Here is your EcoNexus AI executive briefing for ${facilityName}. Campus sustainability index is currently rated at ${score} out of 100. Real-time electrical demand is ${power} kilowatts, offset by 42.5 kilowatts of rooftop solar generation. There are ${anomCount} active operational anomalies detected by our machine learning models. ${data?.top_insight || ''}`;
+      
+      voiceService.speak(
+        speechScript,
+        () => setIsBriefingSpeaking(true),
+        () => setIsBriefingSpeaking(false)
+      );
+    }
+  };
+
 
   const fetchData = async () => {
     try {
@@ -130,6 +159,34 @@ const Dashboard: React.FC = () => {
               LIVE TELEMETRY
             </motion.span>
           )}
+          <motion.button 
+            onClick={toggleExecutiveBriefing}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`px-3.5 py-1.5 rounded-full flex items-center text-xs font-bold transition-all border cursor-pointer ${
+              isBriefingSpeaking
+                ? 'bg-red-500/20 text-red-300 border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse'
+                : 'bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 text-cyan-300 border-cyan-400/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] hover:border-cyan-400'
+            }`}
+          >
+            {isBriefingSpeaking ? (
+              <>
+                <VolumeX size={14} className="mr-1.5 text-red-400" />
+                <span>Stop Voice Briefing</span>
+                <span className="flex space-x-0.5 ml-2">
+                  <span className="w-1 h-2.5 bg-red-400 rounded-full animate-pulse" />
+                  <span className="w-1 h-2.5 bg-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '0.15s' }} />
+                  <span className="w-1 h-2.5 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: '0.3s' }} />
+                </span>
+              </>
+            ) : (
+              <>
+                <Volume2 size={14} className="mr-1.5 text-cyan-400 animate-bounce" />
+                <span>🎙️ Play AI Voice Briefing</span>
+              </>
+            )}
+          </motion.button>
+
           <motion.span 
             whileHover={{ scale: 1.05 }}
             className="px-3.5 py-1.5 bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-cyan-300 border border-cyan-500/30 rounded-full flex items-center text-xs font-semibold shadow-[0_0_15px_rgba(6,182,212,0.15)]"

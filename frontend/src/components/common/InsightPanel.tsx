@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Lightbulb, Info, Target, AlertTriangle, TrendingUp } from 'lucide-react';
+import { Lightbulb, Info, Target, AlertTriangle, TrendingUp, Volume2, VolumeX } from 'lucide-react';
 import { CopilotResponse } from '../../types';
+import { voiceService } from '../../utils/voiceService';
 
 interface InsightPanelProps {
   insight: Partial<CopilotResponse> & { insight: string; cause?: string; evidence?: string[]; prediction?: string; recommendation?: string; expected_impact?: string; confidence?: number; assumptions?: string[] };
@@ -18,19 +19,72 @@ const itemVariants = {
 };
 
 export default function InsightPanel({ insight }: InsightPanelProps) {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      voiceService.stopSpeaking();
+    };
+  }, []);
+
+  const toggleSpeak = () => {
+    if (isSpeaking) {
+      voiceService.stopSpeaking();
+      setIsSpeaking(false);
+    } else {
+      const textToRead = `${insight.insight || insight.answer}. ${insight.cause ? `Root cause: ${insight.cause}` : ''}. ${insight.recommendation ? `Recommended action: ${insight.recommendation}` : ''}`;
+      voiceService.speak(
+        textToRead,
+        () => setIsSpeaking(true),
+        () => setIsSpeaking(false)
+      );
+    }
+  };
+
   return (
     <motion.div 
       variants={containerVariants}
       initial="hidden"
       animate="show"
-      className="glass-card p-5 border-blue-500/30 bg-gradient-to-br from-slate-800/80 to-blue-900/10"
+      className="glass-card p-5 border-blue-500/30 bg-gradient-to-br from-slate-800/80 to-blue-900/10 relative overflow-hidden"
     >
-      <div className="flex items-center space-x-2 mb-4">
-        <div className="p-1.5 bg-blue-500/20 rounded-md">
-          <Lightbulb size={18} className="text-blue-400" />
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center space-x-2">
+          <div className="p-1.5 bg-blue-500/20 rounded-md">
+            <Lightbulb size={18} className="text-blue-400" />
+          </div>
+          <h3 className="text-sm font-semibold text-blue-100 uppercase tracking-wider">AI Decision-Support Insight</h3>
         </div>
-        <h3 className="text-sm font-semibold text-blue-100 uppercase tracking-wider">AI Decision-Support Insight</h3>
+
+        {voiceService.isSynthSupported() && (
+          <button
+            onClick={toggleSpeak}
+            className={`flex items-center space-x-1.5 text-xs px-2.5 py-1 rounded-full border transition-all ${
+              isSpeaking
+                ? 'bg-blue-600/30 text-blue-300 border-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.4)]'
+                : 'bg-slate-800/60 text-slate-400 border-slate-700 hover:text-white hover:border-slate-600'
+            }`}
+          >
+            {isSpeaking ? (
+              <>
+                <VolumeX size={14} className="text-blue-400" />
+                <span className="font-semibold text-blue-300">Stop Voice</span>
+                <span className="flex space-x-0.5 ml-1">
+                  <span className="w-1 h-3 bg-blue-400 animate-pulse rounded-full" />
+                  <span className="w-1 h-3 bg-cyan-400 animate-pulse rounded-full" style={{ animationDelay: '0.15s' }} />
+                  <span className="w-1 h-3 bg-purple-400 animate-pulse rounded-full" style={{ animationDelay: '0.3s' }} />
+                </span>
+              </>
+            ) : (
+              <>
+                <Volume2 size={14} />
+                <span>Read Aloud</span>
+              </>
+            )}
+          </button>
+        )}
       </div>
+
       
       <motion.div variants={itemVariants} className="mb-4">
         <p className="text-slate-200 font-medium leading-relaxed">{insight.insight || insight.answer}</p>

@@ -167,10 +167,10 @@ const Copilot: React.FC = () => {
       className="flex flex-col h-[calc(100vh-8rem)]"
     >
       {/* Header with Voice Controls */}
-      <div className="border-b border-slate-700/50 pb-4 mb-4 flex-shrink-0 flex flex-wrap justify-between items-center gap-3">
+      <div className="border-b border-red-950/40 pb-4 mb-4 flex-shrink-0 flex flex-wrap justify-between items-center gap-3">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white flex items-center">
-             <Brain className="mr-3 text-cyan-400 animate-pulse" size={32} /> AI Voice & Decision Copilot
+             <Brain className="mr-3 text-red-500 animate-pulse" size={32} /> AI Voice & Decision Copilot
           </h1>
           <p className="text-slate-400 mt-1 text-xs sm:text-sm">
             Speak into the microphone or type to converse with Google Gemini facility intelligence.
@@ -183,11 +183,11 @@ const Copilot: React.FC = () => {
             onClick={() => setAutoSpeak(!autoSpeak)}
             className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
               autoSpeak 
-                ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.3)]' 
+                ? 'bg-red-500/20 text-white border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.4)]' 
                 : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-slate-200'
             }`}
           >
-            {autoSpeak ? <Volume2 size={14} className="text-cyan-400" /> : <VolumeX size={14} />}
+            {autoSpeak ? <Volume2 size={14} className="text-red-400" /> : <VolumeX size={14} />}
             <span>Auto Voice Speech: {autoSpeak ? 'ON' : 'OFF'}</span>
           </button>
         </div>
@@ -206,20 +206,20 @@ const Copilot: React.FC = () => {
               <div className={`flex max-w-[88%] ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                 <div className={`flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center shadow-lg ${
                   msg.role === 'user' 
-                    ? 'bg-gradient-to-br from-blue-600 to-indigo-600 ml-3' 
-                    : 'bg-gradient-to-br from-slate-800 to-slate-900 border border-cyan-500/40 mr-3'
+                    ? 'bg-gradient-to-br from-red-600 to-rose-600 ml-3' 
+                    : 'bg-gradient-to-br from-slate-900 to-red-950/40 border border-red-500/40 mr-3'
                 }`}>
-                  {msg.role === 'user' ? <User size={20} className="text-white" /> : <Brain size={20} className="text-cyan-400" />}
+                  {msg.role === 'user' ? <User size={20} className="text-white" /> : <Brain size={20} className="text-red-400" />}
                 </div>
 
                 <div className={`rounded-2xl p-4.5 ${
                   msg.role === 'user' 
-                    ? 'bg-gradient-to-r from-blue-600/30 to-indigo-600/20 border border-blue-500/40 text-white shadow-xl' 
-                    : 'glass-card border-slate-800 shadow-2xl relative group'
+                    ? 'bg-gradient-to-r from-red-600/30 to-rose-600/20 border border-red-500/40 text-white shadow-xl' 
+                    : 'glass-card border-red-950/40 shadow-2xl relative group'
                 }`}>
                   {msg.role === 'assistant' && (
                     <div className="flex items-center justify-between border-b border-slate-800/80 pb-2 mb-3">
-                      <div className="text-xs text-cyan-400 font-semibold flex items-center">
+                      <div className="text-xs text-red-400 font-semibold flex items-center">
                         <Sparkles size={13} className="mr-1.5 text-yellow-300 animate-pulse" /> 
                         Gemini AI Decision Intelligence
                       </div>
@@ -234,16 +234,16 @@ const Copilot: React.FC = () => {
                         }}
                         className={`p-1.5 rounded-full transition-all text-xs flex items-center space-x-1 ${
                           speakingMessageId === msg.id 
-                            ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400' 
+                            ? 'bg-red-500/20 text-white border border-red-400 shadow-[0_0_10px_rgba(239,68,68,0.5)]' 
                             : 'text-slate-400 hover:text-white hover:bg-slate-800'
                         }`}
                         title="Read aloud"
                       >
                         {speakingMessageId === msg.id ? (
                           <>
-                            <VolumeX size={14} className="text-cyan-400" />
+                            <VolumeX size={14} className="text-red-400" />
                             <span className="text-[10px] font-mono pr-1">Stop</span>
-                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
                           </>
                         ) : (
                           <Volume2 size={14} />
@@ -267,15 +267,15 @@ const Copilot: React.FC = () => {
         {loading && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
             <div className="flex flex-row items-center">
-              <div className="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center bg-slate-800 border border-cyan-500/30 mr-3">
-                <Brain size={20} className="text-cyan-400 animate-pulse" />
+              <div className="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center bg-slate-800 border border-red-500/40 mr-3">
+                <Brain size={20} className="text-red-400 animate-pulse" />
               </div>
-              <div className="glass-card rounded-2xl px-5 py-3.5 flex items-center space-x-3 border border-slate-800">
-                <span className="text-xs text-cyan-300 font-medium animate-pulse">Gemini AI analyzing telemetry...</span>
-                <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></div>
-                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
+              <div className="glass-card rounded-2xl px-5 py-3.5 flex items-center space-x-3 border border-red-950/40">
+                <span className="text-xs text-red-300 font-medium animate-pulse">Gemini AI analyzing telemetry...</span>
+                <div className="flex space-x-1.5">
+                  <div className="w-2 h-2 bg-red-500 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-rose-400 rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></div>
+                  <div className="w-2 h-2 bg-white rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
                 </div>
               </div>
             </div>
@@ -309,7 +309,7 @@ const Copilot: React.FC = () => {
       )}
 
       {/* Input & Voice Controls */}
-      <div className="flex-shrink-0 bg-slate-900/90 backdrop-blur-md border-t border-slate-800 p-4 rounded-2xl">
+      <div className="flex-shrink-0 bg-slate-900/90 backdrop-blur-md border-t border-red-950/40 p-4 rounded-2xl">
         {/* Preset Prompt Suggestions */}
         <div className="flex space-x-2 overflow-x-auto pb-3 mb-2 scrollbar-none">
           {SUGGESTIONS.map((sug, i) => (
@@ -318,7 +318,7 @@ const Copilot: React.FC = () => {
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => handleSubmit(undefined, sug)}
-              className="text-xs bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 hover:border-cyan-500/40 text-slate-300 hover:text-white px-3.5 py-1.5 rounded-full transition-all whitespace-nowrap flex-shrink-0"
+              className="text-xs bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 hover:border-red-500/40 text-slate-300 hover:text-white px-3.5 py-1.5 rounded-full transition-all whitespace-nowrap flex-shrink-0"
             >
               {sug}
             </motion.button>
@@ -336,7 +336,7 @@ const Copilot: React.FC = () => {
             className={`p-3.5 rounded-xl border transition-all flex items-center justify-center ${
               isListening
                 ? 'bg-red-600 text-white border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.6)] animate-pulse'
-                : 'bg-slate-800 text-cyan-400 border-slate-700 hover:border-cyan-500 hover:bg-slate-700'
+                : 'bg-slate-800 text-red-400 border-slate-700 hover:border-red-500 hover:bg-slate-700'
             }`}
             title={isListening ? "Listening... click to stop" : "Speak your question (Voice Input)"}
           >
@@ -348,7 +348,7 @@ const Copilot: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={isListening ? "Listening to your voice..." : "Ask in English or Hindi (e.g. What is today's energy risk?)..."}
-            className="flex-1 bg-slate-950/80 border border-slate-700/80 text-white rounded-xl px-4 py-3.5 focus:outline-none focus:border-cyan-500 placeholder-slate-500 transition-colors text-sm"
+            className="flex-1 bg-slate-950/80 border border-slate-700/80 text-white rounded-xl px-4 py-3.5 focus:outline-none focus:border-red-500 placeholder-slate-500 transition-colors text-sm"
             disabled={loading}
           />
 
@@ -357,7 +357,7 @@ const Copilot: React.FC = () => {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             disabled={!input.trim() || loading}
-            className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 disabled:opacity-40 disabled:cursor-not-allowed text-white px-5 py-3.5 rounded-xl flex items-center transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+            className="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 disabled:opacity-40 disabled:cursor-not-allowed text-white px-5 py-3.5 rounded-xl flex items-center transition-all shadow-[0_0_18px_rgba(239,68,68,0.4)]"
           >
             {loading ? <Loader2 className="animate-spin" size={20} /> : <Send size={20} />}
           </motion.button>

@@ -54,10 +54,10 @@ export default function KPICard(props: KPICardProps) {
       className="kpi-card flex flex-col justify-between group relative overflow-hidden cursor-pointer"
     >
       {/* Subtle hover specular sheen */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
 
       <div className="flex justify-between items-start mb-2 relative z-10">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400 group-hover:text-slate-200 transition-colors">{kpi.label}</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400 group-hover:text-white transition-colors">{kpi.label}</h3>
         <div className="relative flex items-center justify-center">
           <div className={clsx("w-2.5 h-2.5 rounded-full relative z-10", 
             kpi.status === 'good' ? 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]' :
@@ -73,10 +73,10 @@ export default function KPICard(props: KPICardProps) {
       </div>
       
       <div className="flex items-baseline mb-4 relative z-10">
-        <span className="text-3xl font-extrabold text-slate-100 font-mono tracking-tight group-hover:text-cyan-300 transition-colors">
+        <span className="text-3xl font-extrabold text-white font-mono tracking-tight group-hover:text-red-400 group-hover:drop-shadow-[0_0_12px_rgba(239,68,68,0.5)] transition-all">
           {typeof displayVal === 'number' ? <AnimatedCounter value={displayVal} /> : displayVal}
         </span>
-        {kpi.unit && <span className="ml-1.5 text-xs font-medium text-slate-400">{kpi.unit}</span>}
+        {kpi.unit && <span className="ml-1.5 text-xs font-semibold text-slate-400 group-hover:text-red-200">{kpi.unit}</span>}
 
       </div>
       

@@ -40,36 +40,36 @@ export default function Sidebar() {
     <motion.div 
       initial={false}
       animate={{ width: sidebarOpen ? 256 : 64 }}
-      className="h-full bg-slate-900 border-r border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto overflow-x-hidden relative"
+      className="h-full bg-[#0c0709] border-r border-red-950/60 flex flex-col justify-between shrink-0 overflow-y-auto overflow-x-hidden relative z-20"
     >
       <div>
-        <div className="p-4 flex items-center h-16">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center shrink-0">
-            <span className="text-white font-bold text-xl">E</span>
+        <div className="p-4 flex items-center h-16 border-b border-red-950/40">
+          <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-rose-700 rounded-lg flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(239,68,68,0.6)] border border-white/20">
+            <span className="text-white font-black text-xl tracking-tighter">E</span>
           </div>
           {sidebarOpen && (
-            <span className="ml-3 font-bold text-lg text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 whitespace-nowrap">
+            <span className="ml-3 font-extrabold text-xl text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-red-500 whitespace-nowrap tracking-wide">
               EcoNexus
             </span>
           )}
         </div>
 
         {sidebarOpen && (
-          <div className="px-4 mb-4 relative">
+          <div className="px-4 mt-4 relative">
             <button 
               onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
-              className="w-full flex items-center justify-between text-sm bg-slate-800 p-2 rounded-lg hover:bg-slate-700 transition"
+              className="w-full flex items-center justify-between text-xs font-semibold bg-[#170e11] p-2.5 rounded-xl border border-red-900/40 hover:border-red-500/40 transition text-zinc-200"
             >
-              <span className="capitalize text-slate-300">{role}</span>
-              <ChevronDown size={16} />
+              <span className="capitalize tracking-wider">{role}</span>
+              <ChevronDown size={14} className="text-red-400" />
             </button>
             {roleDropdownOpen && (
-              <div className="absolute top-full left-4 right-4 mt-1 bg-slate-800 border border-slate-700 rounded-lg shadow-lg z-50 py-1">
+              <div className="absolute top-full left-4 right-4 mt-1 bg-[#170e11] border border-red-800/60 rounded-xl shadow-2xl z-50 py-1">
                 {(['admin', 'operations', 'sustainability'] as UserRole[]).map(r => (
                   <button 
                     key={r}
                     onClick={() => { setRole(r); setRoleDropdownOpen(false); }}
-                    className="w-full text-left px-3 py-2 text-sm text-slate-300 hover:bg-slate-700 capitalize"
+                    className="w-full text-left px-3 py-2 text-xs text-zinc-300 hover:bg-red-600/20 hover:text-white capitalize font-medium"
                   >
                     {r}
                   </button>
@@ -87,8 +87,8 @@ export default function Sidebar() {
                 className={({ isActive }) => clsx(
                   "flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group relative",
                   isActive 
-                    ? "bg-gradient-to-r from-blue-500/20 to-indigo-500/10 text-blue-400 border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.15)]" 
-                    : "text-slate-400 hover:bg-slate-800/80 hover:text-slate-200"
+                    ? "bg-gradient-to-r from-red-600/25 via-red-950/20 to-transparent text-white border border-red-500/40 shadow-[0_0_15px_rgba(239,68,68,0.25)] font-semibold" 
+                    : "text-zinc-400 hover:bg-red-950/30 hover:text-white"
                 )}
               >
                 {({ isActive }) => (
@@ -96,12 +96,12 @@ export default function Sidebar() {
                     {isActive && (
                       <motion.div
                         layoutId="activeNavIndicator"
-                        className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-gradient-to-b from-blue-400 to-indigo-500 rounded-r-full shadow-[0_0_8px_rgba(59,130,246,0.8)]"
+                        className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-gradient-to-b from-white to-red-600 rounded-r-full shadow-[0_0_12px_rgba(255,23,68,1)]"
                       />
                     )}
-                    <item.icon size={20} className={clsx("shrink-0 transition-transform group-hover:scale-110", isActive && "text-blue-400")} />
+                    <item.icon size={20} className={clsx("shrink-0 transition-transform group-hover:scale-110", isActive ? "text-red-400" : "text-zinc-400 group-hover:text-red-400")} />
                     {sidebarOpen && (
-                      <span className="ml-3 text-sm font-medium whitespace-nowrap">{item.label}</span>
+                      <span className="ml-3 text-sm whitespace-nowrap">{item.label}</span>
                     )}
                   </>
                 )}
@@ -110,8 +110,8 @@ export default function Sidebar() {
           ))}
           
           {actionItems.filter(filterRoles).length > 0 && (
-            <div className="my-4 pt-4 border-t border-slate-800/60 px-3">
-              {sidebarOpen && <p className="text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-widest">Decision Tools & AI</p>}
+            <div className="my-4 pt-4 border-t border-red-950/50 px-3">
+              {sidebarOpen && <p className="text-[10px] font-black text-red-400/80 mb-2 uppercase tracking-widest">AI Intelligence & Tools</p>}
             </div>
           )}
           
@@ -122,8 +122,8 @@ export default function Sidebar() {
                 className={({ isActive }) => clsx(
                   "flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group relative",
                   isActive 
-                    ? "bg-gradient-to-r from-purple-500/20 to-pink-500/10 text-purple-300 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.15)]" 
-                    : "text-slate-400 hover:bg-slate-800/80 hover:text-slate-200"
+                    ? "bg-gradient-to-r from-red-600/30 via-rose-950/20 to-transparent text-white border border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.3)] font-semibold" 
+                    : "text-zinc-400 hover:bg-red-950/30 hover:text-white"
                 )}
               >
                 {({ isActive }) => (
@@ -131,16 +131,16 @@ export default function Sidebar() {
                     {isActive && (
                       <motion.div
                         layoutId="activeNavIndicator"
-                        className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-gradient-to-b from-purple-400 to-pink-500 rounded-r-full shadow-[0_0_8px_rgba(168,85,247,0.8)]"
+                        className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-gradient-to-b from-white to-red-600 rounded-r-full shadow-[0_0_12px_rgba(255,23,68,1)]"
                       />
                     )}
-                    <item.icon size={20} className={clsx("shrink-0 transition-transform group-hover:scale-110", isActive && "text-purple-400")} />
+                    <item.icon size={20} className={clsx("shrink-0 transition-transform group-hover:scale-110", isActive ? "text-white" : "text-zinc-400 group-hover:text-red-400")} />
                     {sidebarOpen && (
                       <div className="ml-3 flex items-center justify-between w-full">
-                        <span className="text-sm font-medium whitespace-nowrap">{item.label}</span>
+                        <span className="text-sm whitespace-nowrap">{item.label}</span>
                         {item.path === '/copilot' && (
-                          <span className="text-[9px] font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-white px-1.5 py-0.5 rounded-full uppercase animate-pulse">
-                            AI
+                          <span className="text-[9px] font-black bg-gradient-to-r from-red-600 to-rose-600 text-white px-2 py-0.5 rounded-full uppercase shadow-[0_0_10px_rgba(239,68,68,0.6)] animate-pulse">
+                            VOICE AI
                           </span>
                         )}
                       </div>
@@ -150,6 +150,7 @@ export default function Sidebar() {
               </NavLink>
             </motion.div>
           ))}
+
 
         </nav>
       </div>

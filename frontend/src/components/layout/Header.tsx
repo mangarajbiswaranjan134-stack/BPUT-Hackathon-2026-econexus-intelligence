@@ -38,23 +38,23 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="h-16 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 flex items-center justify-between px-6 shrink-0 z-20 sticky top-0">
+    <header className="h-16 bg-[#0c0709]/90 backdrop-blur-md border-b border-red-950/60 flex items-center justify-between px-6 shrink-0 z-20 sticky top-0 laser-scanner">
       
       {/* Search & Live Alert Ticker */}
       <div className="flex items-center space-x-6 flex-1 min-w-0 pr-4">
         <div className="relative w-56 flex-shrink-0 hidden md:block">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-red-400/60" size={16} />
           <input 
             type="text" 
             placeholder="Search sensors, buildings..." 
-            className="w-full bg-slate-950/60 border border-slate-800 rounded-full py-1.5 pl-9 pr-4 text-xs text-slate-200 focus:outline-none focus:border-blue-500 placeholder-slate-500 transition"
+            className="w-full bg-[#160d10]/90 border border-red-950/80 rounded-full py-1.5 pl-9 pr-4 text-xs text-white focus:outline-none focus:border-red-500 placeholder-zinc-500 transition shadow-inner"
           />
         </div>
 
         {/* Streaming Ticker */}
-        <div className="hidden xl:flex items-center bg-slate-950/60 border border-slate-800/80 px-3 py-1 rounded-full text-xs text-slate-300 max-w-lg min-w-0 overflow-hidden">
-          <span className="flex-shrink-0 text-amber-400 font-semibold flex items-center mr-2">
-            <Activity size={12} className="mr-1 animate-pulse" /> LIVE TELEMETRY:
+        <div className="hidden xl:flex items-center bg-[#160d10]/90 border border-red-900/40 px-3 py-1 rounded-full text-xs text-zinc-300 max-w-lg min-w-0 overflow-hidden shadow-lg">
+          <span className="flex-shrink-0 text-red-400 font-bold flex items-center mr-2 tracking-wider text-[11px]">
+            <Activity size={12} className="mr-1 animate-pulse text-red-500" /> LIVE TELEMETRY:
           </span>
           <AnimatePresence mode="wait">
             <motion.span
@@ -63,7 +63,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.3 }}
-              className="truncate text-slate-300 text-[11px]"
+              className="truncate text-white text-[11px] font-medium"
             >
               {ALERTS_TICKER[tickerIdx]}
             </motion.span>
@@ -75,18 +75,18 @@ export default function Header() {
       <div className="flex items-center space-x-4 flex-shrink-0">
         
         {/* Real-Time Clock */}
-        <div className="hidden sm:flex items-center space-x-1.5 text-xs font-mono text-slate-400 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800/80">
-          <Clock size={13} className="text-blue-400" />
+        <div className="hidden sm:flex items-center space-x-1.5 text-xs font-mono text-zinc-300 bg-[#160d10]/90 px-3 py-1.5 rounded-xl border border-red-950/80">
+          <Clock size={13} className="text-red-400" />
           <span>{timeStr || '00:00:00 IST'}</span>
         </div>
 
         {/* Live IoT Sensor Health Pill */}
-        <div className="flex items-center space-x-2 text-[11px] font-mono bg-slate-950/60 px-3 py-1.5 rounded-lg border border-slate-800/80">
-          <Wifi size={13} className="text-emerald-400" />
-          <span className="text-slate-300 hidden sm:inline">48 SENSORS</span>
+        <div className="flex items-center space-x-2 text-[11px] font-mono bg-[#160d10]/90 px-3 py-1.5 rounded-xl border border-red-950/80">
+          <Wifi size={13} className="text-white" />
+          <span className="text-zinc-300 hidden sm:inline">48 SENSORS</span>
           {simulationActive ? (
-            <span className="text-emerald-400 flex items-center font-bold">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse mr-1"></span>ONLINE
+            <span className="text-red-400 flex items-center font-bold">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping mr-1"></span>ONLINE
             </span>
           ) : (
             <span className="text-amber-400 flex items-center font-bold">
@@ -96,12 +96,13 @@ export default function Header() {
         </div>
 
         {/* User Role Badge */}
-        <div className="flex items-center space-x-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 uppercase tracking-wider">
-          <Shield size={12} />
+        <div className="flex items-center space-x-1.5 text-xs font-bold px-3 py-1 rounded-full bg-gradient-to-r from-red-600/30 to-rose-600/20 text-white border border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.35)] uppercase tracking-wider">
+          <Shield size={12} className="text-red-400" />
           <span>{role}</span>
         </div>
         
-        <div className="h-6 w-px bg-slate-800"></div>
+        <div className="h-6 w-px bg-red-950/80"></div>
+
 
         {/* Notifications Button */}
         <div className="relative">

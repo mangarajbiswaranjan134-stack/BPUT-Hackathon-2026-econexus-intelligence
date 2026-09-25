@@ -126,17 +126,17 @@ const Dashboard: React.FC = () => {
       className="space-y-6"
     >
       {/* Header */}
-      <motion.div variants={itemVariants} className="flex flex-wrap justify-between items-end border-b border-slate-800/80 pb-4 gap-4">
+      <motion.div variants={itemVariants} className="flex flex-wrap justify-between items-end border-b border-red-950/40 pb-4 gap-4">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-slate-400 tracking-tight flex items-center">
+          <h1 className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-red-200 tracking-tight flex items-center">
             <span className="relative flex h-3 w-3 mr-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.9)]"></span>
             </span>
             Executive Command Center
           </h1>
           <p className="text-slate-400 mt-1.5 text-sm flex items-center">
-            <span className="text-cyan-400 font-semibold mr-1.5">{data.facility?.name || 'Engineering College Campus'}</span> &bull; {data.facility?.location || 'Bhubaneswar'} &bull; <span className="ml-1 text-slate-500">{format(new Date(), 'PPpp')}</span>
+            <span className="text-red-400 font-semibold mr-1.5">{data.facility?.name || 'Engineering College Campus'}</span> &bull; {data.facility?.location || 'Bhubaneswar'} &bull; <span className="ml-1 text-slate-500">{format(new Date(), 'PPpp')}</span>
           </p>
         </div>
         
@@ -165,23 +165,23 @@ const Dashboard: React.FC = () => {
             whileTap={{ scale: 0.95 }}
             className={`px-3.5 py-1.5 rounded-full flex items-center text-xs font-bold transition-all border cursor-pointer ${
               isBriefingSpeaking
-                ? 'bg-red-500/20 text-red-300 border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.4)] animate-pulse'
-                : 'bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 text-cyan-300 border-cyan-400/40 shadow-[0_0_15px_rgba(6,182,212,0.2)] hover:border-cyan-400'
+                ? 'bg-red-500/25 text-white border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.5)] animate-pulse'
+                : 'bg-gradient-to-r from-red-600/20 via-rose-600/20 to-red-500/20 text-white border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.25)] hover:border-red-400 hover:bg-red-600/30'
             }`}
           >
             {isBriefingSpeaking ? (
               <>
-                <VolumeX size={14} className="mr-1.5 text-red-400" />
+                <VolumeX size={14} className="mr-1.5 text-red-300" />
                 <span>Stop Voice Briefing</span>
                 <span className="flex space-x-0.5 ml-2">
                   <span className="w-1 h-2.5 bg-red-400 rounded-full animate-pulse" />
-                  <span className="w-1 h-2.5 bg-yellow-400 rounded-full animate-pulse" style={{ animationDelay: '0.15s' }} />
-                  <span className="w-1 h-2.5 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: '0.3s' }} />
+                  <span className="w-1 h-2.5 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.15s' }} />
+                  <span className="w-1 h-2.5 bg-rose-400 rounded-full animate-pulse" style={{ animationDelay: '0.3s' }} />
                 </span>
               </>
             ) : (
               <>
-                <Volume2 size={14} className="mr-1.5 text-cyan-400 animate-bounce" />
+                <Volume2 size={14} className="mr-1.5 text-red-400 animate-bounce" />
                 <span>🎙️ Play AI Voice Briefing</span>
               </>
             )}
@@ -189,9 +189,9 @@ const Dashboard: React.FC = () => {
 
           <motion.span 
             whileHover={{ scale: 1.05 }}
-            className="px-3.5 py-1.5 bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-cyan-300 border border-cyan-500/30 rounded-full flex items-center text-xs font-semibold shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+            className="px-3.5 py-1.5 bg-gradient-to-r from-red-600/20 to-rose-600/20 text-white border border-red-500/40 rounded-full flex items-center text-xs font-semibold shadow-[0_0_15px_rgba(239,68,68,0.2)]"
           >
-            <Brain size={14} className="mr-1.5 text-cyan-400 animate-pulse" /> GEMINI AI ACTIVE
+            <Brain size={14} className="mr-1.5 text-red-400 animate-pulse" /> GEMINI AI ACTIVE
           </motion.span>
         </div>
       </motion.div>
@@ -260,11 +260,11 @@ const Dashboard: React.FC = () => {
 
       {/* Domain Filters & Main Content */}
       <motion.div variants={itemVariants} className="flex items-center justify-between flex-wrap gap-3">
-        <h2 className="text-lg font-bold text-slate-100 flex items-center">
-          <span className="w-2 h-2 rounded-full bg-blue-500 mr-2 animate-pulse" />
+        <h2 className="text-lg font-bold text-white flex items-center">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500 mr-2.5 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
           Real-Time Domain Telemetry
         </h2>
-        <div className="flex space-x-1.5 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 text-xs backdrop-blur-md">
+        <div className="flex space-x-1.5 bg-slate-900/90 p-1.5 rounded-xl border border-red-950/40 text-xs backdrop-blur-md">
           {['all', 'energy', 'water', 'waste', 'air_quality'].map(d => {
             const isActive = domainFilter === d;
             return (
@@ -272,13 +272,13 @@ const Dashboard: React.FC = () => {
                 key={d}
                 onClick={() => setDomainFilter(d)}
                 className={`relative px-3.5 py-1.5 rounded-lg transition-colors font-semibold capitalize z-10 ${
-                  isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200'
+                  isActive ? 'text-white' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeDomainFilterPill"
-                    className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg shadow-[0_0_15px_rgba(59,130,246,0.5)] -z-10"
+                    className="absolute inset-0 bg-gradient-to-r from-red-600 to-rose-600 rounded-lg shadow-[0_0_15px_rgba(239,68,68,0.6)] -z-10"
                     transition={{ type: "spring", stiffness: 350, damping: 25 }}
                   />
                 )}
@@ -388,30 +388,30 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="glass-card p-6 overflow-y-auto border border-slate-800/80 hover:border-purple-500/30 transition-colors" style={{ height: '420px' }}>
+        <div className="glass-card p-6 overflow-y-auto border border-red-950/40 hover:border-red-500/30 transition-colors" style={{ height: '420px' }}>
           <h3 className="text-base font-bold text-white mb-4 flex items-center">
-            <Brain size={18} className="mr-2 text-cyan-400 animate-pulse" /> Gemini AI Executive Summary
+            <Brain size={18} className="mr-2 text-red-500 animate-pulse" /> Gemini AI Executive Summary
           </h3>
           <motion.div 
             whileHover={{ scale: 1.01 }}
-            className="bg-slate-950/80 rounded-2xl p-4 border border-cyan-500/30 glow-blue mb-4 relative overflow-hidden"
+            className="bg-slate-950/80 rounded-2xl p-4 border border-red-500/30 glow-red mb-4 relative overflow-hidden"
           >
             <div className="absolute inset-0 shimmer-sweep opacity-20 pointer-events-none" />
             <p className="text-slate-200 text-sm leading-relaxed relative z-10">{data.top_insight}</p>
-            <div className="mt-3 text-xs text-cyan-400 flex items-center font-semibold relative z-10">
-              <Brain size={13} className="mr-1.5" /> AI Decision-Support Insight &bull; Google Gemini 1.5 Flash
+            <div className="mt-3 text-xs text-red-400 flex items-center font-semibold relative z-10">
+              <Brain size={13} className="mr-1.5 text-white" /> AI Decision-Support Insight &bull; Google Gemini 2.0 Flash
             </div>
           </motion.div>
 
           <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mt-6 mb-3 flex items-center">
-            <Target size={14} className="mr-1.5 text-amber-400" /> High-Priority Operational Actions
+            <Target size={14} className="mr-1.5 text-red-400" /> High-Priority Operational Actions
           </h4>
           <div className="space-y-2">
             {actions.slice(0, 4).map((action) => (
               <motion.div 
                 key={action.id} 
                 whileHover={{ x: 4, scale: 1.01 }}
-                className="flex justify-between items-center bg-slate-950/50 p-3 rounded-xl border border-slate-800/80 hover:border-indigo-500/40 hover:shadow-lg hover:shadow-indigo-500/5 transition-all cursor-pointer"
+                className="flex justify-between items-center bg-slate-950/50 p-3 rounded-xl border border-slate-800/80 hover:border-red-500/40 hover:shadow-lg hover:shadow-red-500/10 transition-all cursor-pointer"
               >
                 <div className="min-w-0 flex-1 mr-2">
                   <p className="text-sm font-semibold text-white truncate">{action.what}</p>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bell, Search, User, Activity, Shield, Clock, Wifi, Brain } from 'lucide-react';
+import { Bell, Search, User, Activity, Shield, Clock, Wifi, Brain, Cpu } from 'lucide-react';
 import { useAppStore } from '../../stores/appStore';
 import clsx from 'clsx';
 import { format } from 'date-fns';
+import HardwareBridgeModal from '../hardware/HardwareBridgeModal';
 
 const ALERTS_TICKER = [
   "⚡ Peak Demand Alert: Academic Block B HVAC load +18% above baseline",
@@ -14,8 +15,9 @@ const ALERTS_TICKER = [
 ];
 
 export default function Header() {
-  const { simulationActive, notifications, role } = useAppStore();
+  const { simulationActive, notifications, role, hardwareData } = useAppStore();
   const [notifOpen, setNotifOpen] = useState(false);
+  const [hardwareModalOpen, setHardwareModalOpen] = useState(false);
   const [tickerIdx, setTickerIdx] = useState(0);
   const [timeStr, setTimeStr] = useState('');
 
@@ -95,6 +97,25 @@ export default function Header() {
           )}
         </div>
 
+        {/* Hardware IoT Connect Button */}
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setHardwareModalOpen(true)}
+          className={`flex items-center space-x-1.5 text-[11px] font-mono px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
+            hardwareData.connected
+              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.3)]'
+              : 'bg-[#160d10]/90 text-red-300 border-red-900/60 hover:border-red-500/60'
+          }`}
+          title="Connect Physical Hardware (Arduino / ESP32 Sensors)"
+        >
+          <Cpu size={13} className={hardwareData.connected ? 'text-emerald-400 animate-pulse' : 'text-red-400'} />
+          <span className="font-bold">{hardwareData.connected ? 'IOT SENSORS LIVE' : 'HARDWARE SENSORS'}</span>
+          {hardwareData.waterDetected && (
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+          )}
+        </motion.button>
+
         {/* User Role Badge */}
         <div className="flex items-center space-x-1.5 text-xs font-bold px-3 py-1 rounded-full bg-gradient-to-r from-red-600/30 to-rose-600/20 text-white border border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.35)] uppercase tracking-wider">
           <Shield size={12} className="text-red-400" />
@@ -156,10 +177,15 @@ export default function Header() {
           </AnimatePresence>
         </div>
 
-        <div className="h-8 w-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center overflow-hidden text-blue-400">
+        <div className="h-8 w-8 rounded-full bg-red-950/60 border border-red-500/40 flex items-center justify-center overflow-hidden text-red-400 shadow-[0_0_10px_rgba(239,68,68,0.3)]">
           <Brain size={16} />
         </div>
       </div>
+
+      <HardwareBridgeModal 
+        isOpen={hardwareModalOpen} 
+        onClose={() => setHardwareModalOpen(false)} 
+      />
     </header>
   );
 }

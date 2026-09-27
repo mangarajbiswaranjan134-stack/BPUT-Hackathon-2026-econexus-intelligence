@@ -15,7 +15,7 @@ import {
   AlertTriangle, TrendingUp, Info, Activity,
   ShieldAlert, Brain, ChevronRight, Zap, Droplets, Trash2,
   Wind, BarChart3, Target, Sun, Volume2, VolumeX, Mic,
-  Trees, Mountain, Users, Sprout
+  Trees, Mountain, Users, Sprout, Cpu
 } from 'lucide-react';
 import { voiceService } from '../utils/voiceService';
 
@@ -30,6 +30,7 @@ const Dashboard: React.FC = () => {
   const [domainFilter, setDomainFilter] = useState<string>('all');
   const [isBriefingSpeaking, setIsBriefingSpeaking] = useState(false);
   const simulationActive = useAppStore(s => s.simulationActive);
+  const hardwareData = useAppStore(s => s.hardwareData);
 
   useEffect(() => {
     return () => {
@@ -199,6 +200,42 @@ const Dashboard: React.FC = () => {
         </div>
       </motion.div>
 
+      {/* Live Physical IoT Hardware Sensor Feed Banner */}
+      {(hardwareData.connected || hardwareData.waterDetected) && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`p-4 rounded-2xl border flex flex-wrap justify-between items-center gap-3 ${
+            hardwareData.waterDetected 
+              ? 'bg-red-950/80 border-red-500 shadow-[0_0_25px_rgba(239,68,68,0.5)] text-white' 
+              : 'bg-emerald-950/40 border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)] text-emerald-200'
+          }`}
+        >
+          <div className="flex items-center space-x-3">
+            <span className={`p-2.5 rounded-xl text-white ${hardwareData.waterDetected ? 'bg-red-600 animate-bounce' : 'bg-emerald-600'}`}>
+              <Cpu size={20} />
+            </span>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="text-xs font-black uppercase font-mono tracking-wider">
+                  {hardwareData.waterDetected ? '🚨 PHYSICAL SENSOR ALERT: WATER LEAK DETECTED (PIN D2)' : '🔌 LIVE HARDWARE SENSORS ACTIVE (COM PORT)'}
+                </span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/40 border border-white/20">
+                  {hardwareData.waterDetected ? 'BUZZER ALARM BEEPING' : 'CALIBRATED'}
+                </span>
+              </div>
+              <div className="text-xs text-slate-300 mt-1 font-mono">
+                AQI Sensor: <strong className="text-white font-bold">{hardwareData.aqi}</strong> &bull; Temp: <strong className="text-white font-bold">{hardwareData.temperature.toFixed(1)}°C</strong> &bull; Water Probe: <strong className={hardwareData.waterDetected ? 'text-red-400 font-black' : 'text-emerald-400'}>{hardwareData.waterDetected ? 'WET (LEAK ALARM)' : 'DRY (SAFE)'}</strong>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-xs font-mono text-slate-400">
+            Real-Time Microcontroller Stream &bull; Updated: {hardwareData.lastUpdated || 'Live'}
+          </div>
+        </motion.div>
+      )}
+
       {/* Key Questions Row */}
       <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5">
         <QuestionCard
@@ -349,8 +386,8 @@ const Dashboard: React.FC = () => {
           <span className="w-2.5 h-2.5 rounded-full bg-red-500 mr-2.5 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
           Real-Time Domain Telemetry
         </h2>
-        <div className="flex space-x-1.5 bg-slate-900/90 p-1.5 rounded-xl border border-red-950/40 text-xs backdrop-blur-md">
-          {['all', 'energy', 'water', 'waste', 'air_quality'].map(d => {
+        <div className="flex space-x-1.5 bg-slate-900/90 p-1.5 rounded-xl border border-red-950/40 text-xs backdrop-blur-md overflow-x-auto max-w-full">
+          {['all', 'energy', 'water', 'waste', 'air_quality', 'biodiversity', 'noise', 'soil'].map(d => {
             const isActive = domainFilter === d;
             return (
               <button

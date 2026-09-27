@@ -10,6 +10,17 @@ export interface Notification {
   read: boolean;
 }
 
+export interface HardwareSensorData {
+  connected: boolean;
+  portName?: string;
+  aqi: number;
+  temperature: number;
+  humidity: number;
+  waterDetected: boolean;
+  buzzerActive: boolean;
+  lastUpdated?: string;
+}
+
 interface AppState {
   role: UserRole;
   setRole: (role: UserRole) => void;
@@ -24,6 +35,8 @@ interface AppState {
   dismissNotification: (id: string) => void;
   facilityType: string;
   setFacilityType: (type: string) => void;
+  hardwareData: HardwareSensorData;
+  setHardwareData: (data: Partial<HardwareSensorData>) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -40,4 +53,13 @@ export const useAppStore = create<AppState>((set) => ({
   dismissNotification: (id) => set((s) => ({ notifications: s.notifications.filter(n => n.id !== id) })),
   facilityType: 'engineering_college',
   setFacilityType: (type) => set({ facilityType: type }),
+  hardwareData: {
+    connected: false,
+    aqi: 54,
+    temperature: 27.8,
+    humidity: 58,
+    waterDetected: false,
+    buzzerActive: false,
+  },
+  setHardwareData: (patch) => set((s) => ({ hardwareData: { ...s.hardwareData, ...patch } })),
 }));

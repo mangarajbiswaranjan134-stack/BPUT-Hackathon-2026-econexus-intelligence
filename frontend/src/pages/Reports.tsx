@@ -164,6 +164,46 @@ const Reports: React.FC = () => {
                <ReportSection title="Air Quality & Safety" data={{ ...report?.air_quality, ...report?.safety }} icon="🛡️" />
             </div>
 
+            {/* EIA Regulatory & Ecology Audit Section */}
+            <div className="glass-card p-6 border border-red-950/60 bg-slate-950/70">
+               <h3 className="text-base font-bold text-white mb-3 text-red-400 border-b border-red-950/50 pb-2 flex items-center justify-between">
+                  <span className="flex items-center">🌳 EIA Environmental & Social Impact Assessment Audit</span>
+                  <span className="text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">100% COMPLIANT</span>
+               </h3>
+               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+                  <div className="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                     <span className="text-slate-400 block font-semibold">MoEFCC Tree Census</span>
+                     <span className="text-white font-bold block mt-1">428 Trees Tagged &bull; 38.6% Green Cover</span>
+                     <span className="text-[11px] text-emerald-400 mt-1 block">142.8 Tons Annual CO₂ Absorption</span>
+                  </div>
+                  <div className="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                     <span className="text-slate-400 block font-semibold">CPCB Soil Contamination</span>
+                     <span className="text-white font-bold block mt-1">Optimal Neutral pH 6.8 &bull; 84.6 Health Index</span>
+                     <span className="text-[11px] text-emerald-400 mt-1 block">Lead & Cadmium ppm Safe</span>
+                  </div>
+                  <div className="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                     <span className="text-slate-400 block font-semibold">Noise Rules (2000)</span>
+                     <span className="text-white font-bold block mt-1">52.4 dB Avg &bull; 96.8% Compliance Rate</span>
+                     <span className="text-[11px] text-emerald-400 mt-1 block">Hospital & Library Silent Zones Safe</span>
+                  </div>
+                  <div className="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                     <span className="text-slate-400 block font-semibold">GRI 413 Social Impact</span>
+                     <span className="text-white font-bold block mt-1">87.4% Community Satisfaction Index</span>
+                     <span className="text-[11px] text-emerald-400 mt-1 block">4.2h Average Grievance SLA</span>
+                  </div>
+                  <div className="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                     <span className="text-slate-400 block font-semibold">NDMA Disaster Resilience</span>
+                     <span className="text-white font-bold block mt-1">8/8 Sirens Operational &bull; Zone III Seismic</span>
+                     <span className="text-[11px] text-emerald-400 mt-1 block">Ultrasonic Storm Drain Probes Safe</span>
+                  </div>
+                  <div className="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                     <span className="text-slate-400 block font-semibold">Digital Twin Optimization</span>
+                     <span className="text-white font-bold block mt-1">Pre-cooling & Pumping Automated</span>
+                     <span className="text-[11px] text-yellow-400 mt-1 block">₹36,150/day Utility Spend Optimized</span>
+                  </div>
+               </div>
+            </div>
+
             <div className="glass-card p-6">
                <h3 className="text-lg font-medium text-white mb-4 text-emerald-400 border-b border-slate-700/50 pb-2 flex items-center">
                   <CheckCircle size={18} className="mr-2" /> Action Center Recommendations

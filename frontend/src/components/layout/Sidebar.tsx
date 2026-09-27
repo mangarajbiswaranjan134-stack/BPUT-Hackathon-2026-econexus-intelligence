@@ -15,27 +15,27 @@ const navItems = [
   { path: '/energy', label: 'Energy', icon: Zap, roles: ['admin', 'operations', 'sustainability'] },
   { path: '/water', label: 'Water', icon: Droplets, roles: ['admin', 'operations', 'sustainability'] },
   { path: '/waste', label: 'Waste', icon: Trash2, roles: ['admin', 'operations', 'sustainability'] },
-  { path: '/air-quality', label: 'Air Quality', icon: Wind, roles: ['admin', 'sustainability'] },
-  { path: '/traffic', label: 'Traffic & Parking', icon: Car, roles: ['admin', 'operations'] },
-  { path: '/assets', label: 'Assets', icon: Server, roles: ['admin', 'operations'] },
-  { path: '/safety', label: 'Safety', icon: ShieldAlert, roles: ['admin', 'operations'] },
+  { path: '/air-quality', label: 'Air Quality', icon: Wind, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/traffic', label: 'Traffic & Parking', icon: Car, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/assets', label: 'Assets', icon: Server, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/safety', label: 'Safety', icon: ShieldAlert, roles: ['admin', 'operations', 'sustainability'] },
 ];
 
 const eiaItems = [
-  { path: '/biodiversity', label: 'Biodiversity & Trees', icon: Trees, roles: ['admin', 'sustainability'] },
-  { path: '/land-soil', label: 'Land & Soil Health', icon: Mountain, roles: ['admin', 'sustainability'] },
+  { path: '/biodiversity', label: 'Biodiversity & Trees', icon: Trees, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/land-soil', label: 'Land & Soil Health', icon: Mountain, roles: ['admin', 'operations', 'sustainability'] },
   { path: '/noise', label: 'Noise Compliance', icon: Volume2, roles: ['admin', 'operations', 'sustainability'] },
   { path: '/community', label: 'Community & Social', icon: Users, roles: ['admin', 'operations', 'sustainability'] },
-  { path: '/disaster-risk', label: 'Disaster & Emergency', icon: ShieldAlert, roles: ['admin', 'operations'] },
+  { path: '/disaster-risk', label: 'Disaster & Emergency', icon: ShieldAlert, roles: ['admin', 'operations', 'sustainability'] },
 ];
 
 const actionItems = [
-  { path: '/copilot', label: 'AI Copilot', icon: Bot, roles: ['admin', 'operations'] },
-  { path: '/scenarios', label: 'Simulator', icon: FlaskConical, roles: ['admin', 'sustainability'] },
-  { path: '/actions', label: 'Action Center', icon: ListChecks, roles: ['admin', 'operations'] },
-  { path: '/reports', label: 'Reports', icon: FileText, roles: ['admin', 'sustainability'] },
-  { path: '/csv-upload', label: 'CSV Upload', icon: Upload, roles: ['admin'] },
-  { path: '/settings', label: 'Settings', icon: Settings, roles: ['admin'] },
+  { path: '/copilot', label: 'AI Copilot', icon: Bot, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/scenarios', label: 'Simulator', icon: FlaskConical, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/actions', label: 'Action Center', icon: ListChecks, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/reports', label: 'EIA Reports', icon: FileText, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/csv-upload', label: 'CSV Upload', icon: Upload, roles: ['admin', 'operations', 'sustainability'] },
+  { path: '/settings', label: 'Settings', icon: Settings, roles: ['admin', 'operations', 'sustainability'] },
 ];
 
 export default function Sidebar() {

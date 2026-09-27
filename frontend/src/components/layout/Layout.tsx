@@ -5,10 +5,14 @@ import { Bot, Sparkles } from 'lucide-react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import LoadingSkeleton from '../common/LoadingSkeleton';
+import LiveHardwareRibbon from '../hardware/LiveHardwareRibbon';
+import HardwareBridgeModal from '../hardware/HardwareBridgeModal';
+import { useAppStore } from '../../stores/appStore';
 
 export default function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { hardwareModalOpen, setHardwareModalOpen } = useAppStore();
   const isCopilotPage = location.pathname === '/copilot';
 
   return (
@@ -46,7 +50,10 @@ export default function Layout() {
         
         <Header />
         
-        <main className="flex-1 overflow-y-auto p-6 z-0 relative">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 z-0 relative">
+          {/* Live Physical IoT Hardware Sensor HUD Ribbon */}
+          <LiveHardwareRibbon onOpenModal={() => setHardwareModalOpen(true)} />
+
           <Suspense fallback={<LoadingSkeleton className="w-full h-full min-h-[500px]" />}>
             <AnimatePresence mode="wait">
               <Outlet />
@@ -81,6 +88,11 @@ export default function Layout() {
           )}
         </main>
       </div>
+
+      <HardwareBridgeModal 
+        isOpen={hardwareModalOpen} 
+        onClose={() => setHardwareModalOpen(false)} 
+      />
     </div>
   );
 }

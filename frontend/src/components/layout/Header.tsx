@@ -4,7 +4,6 @@ import { Bell, Search, User, Activity, Shield, Clock, Wifi, Brain, Cpu } from 'l
 import { useAppStore } from '../../stores/appStore';
 import clsx from 'clsx';
 import { format } from 'date-fns';
-import HardwareBridgeModal from '../hardware/HardwareBridgeModal';
 
 const ALERTS_TICKER = [
   "⚡ Peak Demand Alert: Academic Block B HVAC load +18% above baseline",
@@ -15,9 +14,8 @@ const ALERTS_TICKER = [
 ];
 
 export default function Header() {
-  const { simulationActive, notifications, role, hardwareData } = useAppStore();
+  const { simulationActive, notifications, role, hardwareData, hardwareModalOpen, setHardwareModalOpen } = useAppStore();
   const [notifOpen, setNotifOpen] = useState(false);
-  const [hardwareModalOpen, setHardwareModalOpen] = useState(false);
   const [tickerIdx, setTickerIdx] = useState(0);
   const [timeStr, setTimeStr] = useState('');
 
@@ -40,23 +38,23 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="h-16 bg-[#0c0709]/90 backdrop-blur-md border-b border-red-950/60 flex items-center justify-between px-6 shrink-0 z-20 sticky top-0 laser-scanner">
+    <header className="h-16 bg-[#0c0709]/95 backdrop-blur-md border-b border-red-950/60 flex items-center justify-between px-3 sm:px-6 shrink-0 z-20 sticky top-0 laser-scanner w-full overflow-hidden">
       
       {/* Search & Live Alert Ticker */}
-      <div className="flex items-center space-x-6 flex-1 min-w-0 pr-4">
-        <div className="relative w-56 flex-shrink-0 hidden md:block">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-red-400/60" size={16} />
+      <div className="flex items-center space-x-3 sm:space-x-4 flex-1 min-w-0 pr-2 sm:pr-4">
+        <div className="relative w-36 lg:w-48 flex-shrink-0 hidden md:block">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-red-400/60" size={14} />
           <input 
             type="text" 
-            placeholder="Search sensors, buildings..." 
-            className="w-full bg-[#160d10]/90 border border-red-950/80 rounded-full py-1.5 pl-9 pr-4 text-xs text-white focus:outline-none focus:border-red-500 placeholder-zinc-500 transition shadow-inner"
+            placeholder="Search sensors, zones..." 
+            className="w-full bg-[#160d10]/90 border border-red-950/80 rounded-full py-1.5 pl-8 pr-3 text-xs text-white focus:outline-none focus:border-red-500 placeholder-zinc-500 transition shadow-inner"
           />
         </div>
 
         {/* Streaming Ticker */}
-        <div className="hidden xl:flex items-center bg-[#160d10]/90 border border-red-900/40 px-3 py-1 rounded-full text-xs text-zinc-300 max-w-lg min-w-0 overflow-hidden shadow-lg">
+        <div className="hidden 2xl:flex items-center bg-[#160d10]/90 border border-red-900/40 px-3 py-1 rounded-full text-xs text-zinc-300 max-w-sm min-w-0 overflow-hidden shadow-lg">
           <span className="flex-shrink-0 text-red-400 font-bold flex items-center mr-2 tracking-wider text-[11px]">
-            <Activity size={12} className="mr-1 animate-pulse text-red-500" /> LIVE TELEMETRY:
+            <Activity size={12} className="mr-1 animate-pulse text-red-500" /> LIVE:
           </span>
           <AnimatePresence mode="wait">
             <motion.span
@@ -73,19 +71,19 @@ export default function Header() {
         </div>
       </div>
       
-      {/* Right System Info Bar */}
-      <div className="flex items-center space-x-4 flex-shrink-0">
+      {/* Right System Info Bar - Responsive with zero overflow */}
+      <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
         
         {/* Real-Time Clock */}
-        <div className="hidden sm:flex items-center space-x-1.5 text-xs font-mono text-zinc-300 bg-[#160d10]/90 px-3 py-1.5 rounded-xl border border-red-950/80">
-          <Clock size={13} className="text-red-400" />
+        <div className="hidden 2xl:flex items-center space-x-1.5 text-xs font-mono text-zinc-300 bg-[#160d10]/90 px-2.5 py-1.5 rounded-xl border border-red-950/80">
+          <Clock size={12} className="text-red-400" />
           <span>{timeStr || '00:00:00 IST'}</span>
         </div>
 
         {/* Live IoT Sensor Health Pill */}
-        <div className="flex items-center space-x-2 text-[11px] font-mono bg-[#160d10]/90 px-3 py-1.5 rounded-xl border border-red-950/80">
-          <Wifi size={13} className="text-white" />
-          <span className="text-zinc-300 hidden sm:inline">48 SENSORS</span>
+        <div className="hidden xl:flex items-center space-x-1.5 text-[11px] font-mono bg-[#160d10]/90 px-2.5 py-1.5 rounded-xl border border-red-950/80">
+          <Wifi size={12} className="text-white" />
+          <span className="text-zinc-300">48 SENSORS</span>
           {simulationActive ? (
             <span className="text-red-400 flex items-center font-bold">
               <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping mr-1"></span>ONLINE
@@ -99,40 +97,43 @@ export default function Header() {
 
         {/* Hardware IoT Connect Button */}
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
           onClick={() => setHardwareModalOpen(true)}
-          className={`flex items-center space-x-1.5 text-[11px] font-mono px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
+          className={`flex items-center space-x-1.5 text-xs font-mono px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
             hardwareData.connected
-              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.3)]'
+              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.35)]'
+              : hardwareData.waterDetected
+              ? 'bg-red-500/20 text-red-300 border-red-500/50 animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)]'
               : 'bg-[#160d10]/90 text-red-300 border-red-900/60 hover:border-red-500/60'
           }`}
           title="Connect Physical Hardware (Arduino / ESP32 Sensors)"
         >
           <Cpu size={13} className={hardwareData.connected ? 'text-emerald-400 animate-pulse' : 'text-red-400'} />
-          <span className="font-bold">{hardwareData.connected ? 'IOT SENSORS LIVE' : 'HARDWARE SENSORS'}</span>
+          <span className="font-bold tracking-wider">
+            {hardwareData.connected ? 'IOT SENSORS LIVE' : 'HARDWARE SENSORS'}
+          </span>
           {hardwareData.waterDetected && (
             <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
           )}
         </motion.button>
 
         {/* User Role Badge */}
-        <div className="flex items-center space-x-1.5 text-xs font-bold px-3 py-1 rounded-full bg-gradient-to-r from-red-600/30 to-rose-600/20 text-white border border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.35)] uppercase tracking-wider">
-          <Shield size={12} className="text-red-400" />
+        <div className="flex items-center space-x-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-gradient-to-r from-red-600/30 to-rose-600/20 text-white border border-red-500/50 shadow-[0_0_12px_rgba(239,68,68,0.3)] uppercase tracking-wider">
+          <Shield size={11} className="text-red-400" />
           <span>{role}</span>
         </div>
         
-        <div className="h-6 w-px bg-red-950/80"></div>
-
+        <div className="h-5 w-px bg-red-950/80"></div>
 
         {/* Notifications Button */}
         <div className="relative">
           <button 
             onClick={() => setNotifOpen(!notifOpen)}
-            className="relative p-2 text-slate-400 hover:text-white transition rounded-lg hover:bg-slate-800"
+            className="relative p-1.5 sm:p-2 text-slate-400 hover:text-white transition rounded-lg hover:bg-slate-800"
             title="Notifications"
           >
-            <Bell size={18} />
+            <Bell size={17} />
             {unreadCount > 0 && (
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
             )}
@@ -181,11 +182,6 @@ export default function Header() {
           <Brain size={16} />
         </div>
       </div>
-
-      <HardwareBridgeModal 
-        isOpen={hardwareModalOpen} 
-        onClose={() => setHardwareModalOpen(false)} 
-      />
     </header>
   );
 }

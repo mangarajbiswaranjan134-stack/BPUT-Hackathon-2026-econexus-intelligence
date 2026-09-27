@@ -64,10 +64,30 @@ class HardwareBridge {
             const trimmed = line.trim();
             if (!trimmed) continue;
             try {
-              // Expected format: {"aqi": 82, "temp": 28.5, "water": 1}
-              const parsed: SensorPacket = JSON.parse(trimmed);
+              // Expected format: {"aqi": 82, "temp": 28.5, "water": true/1, "buzzer": false/0}
+              const raw: any = JSON.parse(trimmed);
+              const isWater = typeof raw.water === 'boolean' 
+                ? (raw.water ? 1 : 0) 
+                : typeof raw.water === 'string'
+                ? (raw.water.toLowerCase() === 'true' || raw.water === '1' ? 1 : 0)
+                : Number(raw.water || 0);
+
+              const isBuzzer = typeof raw.buzzer === 'boolean'
+                ? (raw.buzzer ? 1 : 0)
+                : typeof raw.buzzer === 'string'
+                ? (raw.buzzer.toLowerCase() === 'true' || raw.buzzer === '1' ? 1 : 0)
+                : Number(raw.buzzer || 0);
+
+              const packet: SensorPacket = {
+                aqi: Number(raw.aqi ?? 65),
+                temp: Number(raw.temp ?? raw.temperature ?? 28),
+                humidity: raw.humidity ? Number(raw.humidity) : undefined,
+                water: isWater,
+                buzzer: isBuzzer,
+              };
+
               if (this.onDataCallback) {
-                this.onDataCallback(parsed);
+                this.onDataCallback(packet);
               }
             } catch {
               // Plain text format fallback: AQI:82,TEMP:28.5,WATER:1
@@ -77,17 +97,24 @@ class HardwareBridge {
                 const [k, v] = p.split(':');
                 if (k && v) {
                   const key = k.trim().toLowerCase();
-                  const num = parseFloat(v.trim());
-                  if (key === 'aqi') packet.aqi = num;
-                  if (key === 'temp' || key === 'temperature') packet.temp = num;
-                  if (key === 'water' || key === 'leak') packet.water = Math.round(num);
+                  const valStr = v.trim().toLowerCase();
+                  const num = parseFloat(valStr);
+                  if (key === 'aqi') packet.aqi = isNaN(num) ? 60 : num;
+                  if (key === 'temp' || key === 'temperature') packet.temp = isNaN(num) ? 28 : num;
+                  if (key === 'water' || key === 'leak') {
+                    packet.water = (valStr === 'true' || valStr === '1' || valStr === 'wet') ? 1 : 0;
+                  }
+                  if (key === 'buzzer' || key === 'siren') {
+                    packet.buzzer = (valStr === 'true' || valStr === '1' || valStr === 'on') ? 1 : 0;
+                  }
                 }
               });
               if (packet.aqi !== undefined && this.onDataCallback) {
                 this.onDataCallback({
-                  aqi: packet.aqi || 60,
-                  temp: packet.temp || 28,
-                  water: packet.water || 0
+                  aqi: packet.aqi ?? 60,
+                  temp: packet.temp ?? 28,
+                  water: packet.water ?? 0,
+                  buzzer: packet.buzzer ?? 0
                 });
               }
             }

@@ -37,6 +37,9 @@ interface AppState {
   setFacilityType: (type: string) => void;
   hardwareData: HardwareSensorData;
   setHardwareData: (data: Partial<HardwareSensorData>) => void;
+  updateHardwareData: (data: Partial<HardwareSensorData>) => void;
+  hardwareModalOpen: boolean;
+  setHardwareModalOpen: (open: boolean) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -62,4 +65,7 @@ export const useAppStore = create<AppState>((set) => ({
     buzzerActive: false,
   },
   setHardwareData: (patch) => set((s) => ({ hardwareData: { ...s.hardwareData, ...patch } })),
+  updateHardwareData: (patch) => set((s) => ({ hardwareData: { ...s.hardwareData, ...patch } })),
+  hardwareModalOpen: false,
+  setHardwareModalOpen: (open) => set({ hardwareModalOpen: open }),
 }));

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, Zap, Droplets, Trash2, Wind, Car, Server, 
   ShieldAlert, Bot, FlaskConical, ListChecks, FileText, Upload, 
-  Settings, ChevronLeft, ChevronRight, ChevronDown, Trees, Mountain, Volume2, Users
+  Settings, ChevronLeft, ChevronRight, ChevronDown, Trees, Mountain, Volume2, Users, LogOut
 } from 'lucide-react';
 import { useAppStore } from '../../stores/appStore';
 import { UserRole } from '../../types';
@@ -39,7 +39,7 @@ const actionItems = [
 ];
 
 export default function Sidebar() {
-  const { role, setRole, sidebarOpen, toggleSidebar, simulationActive, setSimulationActive } = useAppStore();
+  const { role, setRole, sidebarOpen, toggleSidebar, simulationActive, setSimulationActive, logout } = useAppStore();
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
 
   const filterRoles = (item: any) => item.roles.includes(role);
@@ -216,6 +216,27 @@ export default function Sidebar() {
             </button>
           </div>
         )}
+
+        {/* Lock / Sign Out Button */}
+        {sidebarOpen ? (
+          <button
+            onClick={logout}
+            className="w-full flex items-center space-x-2 text-xs text-red-400 hover:text-red-300 hover:bg-red-950/40 p-2 rounded-xl transition border border-transparent hover:border-red-900/40 mb-3 cursor-pointer"
+            title="Lock Portal / Return to Login Screen"
+          >
+            <LogOut size={16} />
+            <span className="font-semibold">Lock / Sign Out</span>
+          </button>
+        ) : (
+          <button
+            onClick={logout}
+            className="w-full flex items-center justify-center text-red-400 hover:bg-red-950/40 p-2 rounded-xl transition mb-3 cursor-pointer"
+            title="Lock Portal / Return to Login Screen"
+          >
+            <LogOut size={16} />
+          </button>
+        )}
+
         <button
           onClick={toggleSidebar}
           className="w-full flex items-center justify-center p-2 rounded-lg text-slate-400 hover:bg-slate-800 transition"

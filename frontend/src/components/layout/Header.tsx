@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Bell, Search, User, Activity, Shield, Clock, Wifi, Brain, Cpu } from 'lucide-react';
+import { Bell, Search, User, Activity, Shield, Clock, Wifi, Brain, Cpu, LogOut } from 'lucide-react';
 import { useAppStore } from '../../stores/appStore';
 import clsx from 'clsx';
 import { format } from 'date-fns';
@@ -14,7 +14,7 @@ const ALERTS_TICKER = [
 ];
 
 export default function Header() {
-  const { simulationActive, notifications, role, hardwareData, hardwareModalOpen, setHardwareModalOpen } = useAppStore();
+  const { simulationActive, notifications, role, hardwareData, hardwareModalOpen, setHardwareModalOpen, logout, userProfile } = useAppStore();
   const [notifOpen, setNotifOpen] = useState(false);
   const [tickerIdx, setTickerIdx] = useState(0);
   const [timeStr, setTimeStr] = useState('');
@@ -178,8 +178,30 @@ export default function Header() {
           </AnimatePresence>
         </div>
 
-        <div className="h-8 w-8 rounded-full bg-red-950/60 border border-red-500/40 flex items-center justify-center overflow-hidden text-red-400 shadow-[0_0_10px_rgba(239,68,68,0.3)]">
-          <Brain size={16} />
+        {/* User Profile & Logout */}
+        <div className="flex items-center space-x-2 pl-1 border-l border-red-950/80">
+          <div className="hidden lg:flex flex-col text-right">
+            <span className="text-[11px] font-semibold text-zinc-200 leading-none">
+              {userProfile?.displayName || 'Officer'}
+            </span>
+            <span className="text-[9px] font-mono text-zinc-500 uppercase leading-tight mt-0.5">
+              ID: {userProfile?.username || 'admin'}
+            </span>
+          </div>
+
+          <div className="h-8 w-8 rounded-full bg-red-950/60 border border-red-500/40 flex items-center justify-center overflow-hidden text-red-400 shadow-[0_0_10px_rgba(239,68,68,0.3)]">
+            <Brain size={16} />
+          </div>
+
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.94 }}
+            onClick={logout}
+            className="p-1.5 text-zinc-400 hover:text-red-400 hover:bg-red-950/60 rounded-lg border border-transparent hover:border-red-800/60 transition cursor-pointer flex items-center gap-1"
+            title="Lock Portal / Logout (Show Login Screen)"
+          >
+            <LogOut size={16} />
+          </motion.button>
         </div>
       </div>
     </header>

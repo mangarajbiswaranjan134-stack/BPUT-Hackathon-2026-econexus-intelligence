@@ -24,7 +24,16 @@ const Reports = lazy(() => import('./pages/Reports'));
 const CSVUpload = lazy(() => import('./pages/CSVUpload'));
 const Settings = lazy(() => import('./pages/Settings'));
 
+import AuthGateway from './components/auth/AuthGateway';
+import { useAppStore } from './stores/appStore';
+
 function App() {
+  const { isAuthenticated } = useAppStore();
+
+  if (!isAuthenticated) {
+    return <AuthGateway />;
+  }
+
   return (
     <Suspense fallback={
       <div className="flex items-center justify-center h-screen bg-slate-950">

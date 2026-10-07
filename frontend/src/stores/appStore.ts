@@ -21,7 +21,18 @@ export interface HardwareSensorData {
   lastUpdated?: string;
 }
 
+export interface UserProfile {
+  username: string;
+  displayName: string;
+  role: UserRole;
+  loginTime: string;
+}
+
 interface AppState {
+  isAuthenticated: boolean;
+  userProfile: UserProfile | null;
+  login: (username: string, role?: UserRole, displayName?: string) => void;
+  logout: () => void;
   role: UserRole;
   setRole: (role: UserRole) => void;
   sidebarOpen: boolean;
@@ -42,9 +53,49 @@ interface AppState {
   setHardwareModalOpen: (open: boolean) => void;
 }
 
+// Check session storage so opening fresh tab requires login
+const initialAuth = typeof window !== 'undefined' && sessionStorage.getItem('econexus_authenticated') === 'true';
+const initialUser = typeof window !== 'undefined' ? JSON.parse(sessionStorage.getItem('econexus_user') || 'null') : null;
+
 export const useAppStore = create<AppState>((set) => ({
-  role: 'admin',
-  setRole: (role) => set({ role }),
+  isAuthenticated: initialAuth,
+  userProfile: initialUser,
+  login: (username: string, role: UserRole = 'admin', displayName?: string) => {
+    const profile: UserProfile = {
+      username,
+      displayName: displayName || (username === 'admin' ? 'Facility Admin' : username === 'judge' ? 'BPUT Jury / Judge' : username),
+      role,
+      loginTime: new Date().toLocaleTimeString(),
+    };
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('econexus_authenticated', 'true');
+      sessionStorage.setItem('econexus_user', JSON.stringify(profile));
+    }
+    set({
+      isAuthenticated: true,
+      userProfile: profile,
+      role,
+    });
+  },
+  logout: () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('econexus_authenticated');
+      sessionStorage.removeItem('econexus_user');
+    }
+    set({
+      isAuthenticated: false,
+      userProfile: null,
+    });
+  },
+  role: initialUser?.role || 'admin',
+  setRole: (role) => set((s) => {
+    if (s.userProfile && typeof window !== 'undefined') {
+      const updated = { ...s.userProfile, role };
+      sessionStorage.setItem('econexus_user', JSON.stringify(updated));
+      return { role, userProfile: updated };
+    }
+    return { role };
+  }),
   sidebarOpen: true,
   toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
   simulationActive: false,

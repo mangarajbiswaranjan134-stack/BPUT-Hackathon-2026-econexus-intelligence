@@ -289,18 +289,249 @@ export const mockForecast: ForecastResult = {
   summary: 'Projected demand shows afternoon peak of 510 kW at 14:30 IST. Solar generation expected to offset 38 kW during peak window.'
 };
 
-export const mockCopilotResponse = (question: string): CopilotResponse => ({
-  answer: `Analysis for "${question}": EcoNexus facility intelligence monitors 48 IoT sensor nodes across campus. Current aggregate demand is 412.5 kW with optimal solar offset (42.5 kW). All water flow and air quality indices are within healthy parameters.`,
-  insight: "Predictive model forecasts stable diurnal consumption with peak risk localized to Block B laboratory HVAC clusters.",
-  cause: "Combined equipment usage during academic lab sessions between 13:00 and 16:00.",
-  evidence: ["Block B energy load +39.5% above baseline", "Outdoor temperature reached 31°C", "Solar PV generation steady at 42.5 kW"],
-  prediction: "Grid peak tariff will apply from 14:00 onwards. Total projected daily energy spend is ₹36,150.",
-  recommendation: "Shift non-urgent thermal loads and engage campus battery/chiller storage to reduce grid peak draw by 45 kW.",
-  expected_impact: "Expected cost reduction of ₹14,800/week and 1.8 tons CO2 emissions avoided.",
-  confidence: 0.88,
-  assumptions: ["Solar irradiance remains above 750 W/m²", "Hostel evening peak commences at 18:30 IST"],
-  data_label: "AI Decision-Support Insight"
-});
+export const mockCopilotResponse = (question: string): CopilotResponse => {
+  const q = (question || '').toLowerCase().trim();
+
+  // 1. GREETINGS & CASUAL HELLO
+  if (/^(hi|hello|hey|namaste|pranam|good\s*(morning|afternoon|evening)|kaise\s*ho|sup|hola|yo)\b/i.test(q) || q === 'hi' || q === 'hello') {
+    return {
+      answer: "Namaste & Hello! Main EcoNexus AI Copilot hoon — aapka 24/7 autonomous facility aur EIA decision-support assistant.",
+      insight: "Campus ke 48 IoT sensor nodes, physical Arduino edge probe, aur Vercel cloud pipeline real-time active hain.",
+      cause: "System operational health 100% hai. Koi critical failure nahi hai.",
+      evidence: [
+        "IoT Hardware: Arduino Web-Serial link ready",
+        "Sensors Active: Air Quality, Thermal, Water Flow, Smart Bins",
+        "EIA Standards: CPCB & MoEFCC threshold monitoring active"
+      ],
+      prediction: "Agla routine telemetry cycle agle 5 seconds me process hoga.",
+      recommendation: "Aap mujhse live water leak, energy spikes, hardware pins, BPUT Hackathon, ya EIA compliance ke baare me pooch sakte hain!",
+      expected_impact: "Instant voice & text responses with zero latency.",
+      confidence: 0.99,
+      assumptions: ["User authenticated as Facility Operator / Jury"],
+      data_label: "Conversational AI Intelligence"
+    };
+  }
+
+  // 2. WHO ARE YOU / IDENTITY / TEAM GODXZ / BPUT HACKATHON
+  if (q.includes('who are you') || q.includes('who made') || q.includes('team') || q.includes('godxz') || q.includes('bput') || q.includes('hackathon') || q.includes('biswaranjan') || q.includes('aditya') || q.includes('developer')) {
+    return {
+      answer: "EcoNexus Intelligence ko Team GODXZ ne BPUT Hackathon 2026 (Cognizant Track) ke liye banaya hai, lead by Biswaranjan Mangaraj and Aditya.",
+      insight: "Yeh platform traditional static EIA paperwork ko real-time IoT hardware telemetry + ML predictive forecasting me transform karta hai.",
+      cause: "Industrial aur academic campuses me environmental impact compliance automate karna.",
+      evidence: [
+        "Team: Team GODXZ (B.Tech CSE, 3rd Semester)",
+        "Architecture: 5-Tier Zero-Driver Edge-to-Cloud System",
+        "Innovation: Physical Arduino UNO Web Serial API + Live Vercel React Dashboard"
+      ],
+      prediction: "Platform ready for live stage demonstration and jury Q&A defense.",
+      recommendation: "Live Hardware Connect button dabakar physical leak probe aur buzzer ka real-time demo dekhein!",
+      expected_impact: "1st Prize Contender in BPUT Hackathon Cognizant EIA Track.",
+      confidence: 1.0,
+      assumptions: ["Evaluated by BPUT Hackathon 2026 Jury Panel"],
+      data_label: "Team GODXZ System Architecture"
+    };
+  }
+
+  // 3. HARDWARE & PHYSICAL SENSORS / ARDUINO
+  if (q.includes('hardware') || q.includes('arduino') || q.includes('sensor') || q.includes('pin') || q.includes('buzzer') || q.includes('serial') || q.includes('com') || q.includes('wire') || q.includes('dht11') || q.includes('probe')) {
+    return {
+      answer: "Physical edge hardware me Arduino Uno microcontroller Web Serial API ke zariye Chrome browser se 9600 baud rate par directly connected hai.",
+      insight: "Zero driver requirement: Pin D2 par LM393 Rain/Water probe hai, Pin D4 par DHT11 temperature/humidity, aur Pin D8 par 5V Active Siren Buzzer hai.",
+      cause: "Edge hardware local failsafe circuit ke sath configure hai taaki internet drop hone par bhi buzzer baj sake.",
+      evidence: [
+        "Water Probe: Digital Pin D2 (Active-LOW interrupt)",
+        "Thermal DHT11: Digital Pin D4 (Sampling every 2.0s)",
+        "Siren Buzzer: Digital Pin D8 (Bi-directional software override)",
+        "Web Serial Protocol: JSON telemetry frame parsing"
+      ],
+      prediction: "Agar probe par paani gira toh 10 milliseconds me live siren trigger hoga aur dashboard red ho jayega.",
+      recommendation: "Top header me 'HARDWARE SENSORS' pill click karke Web Serial port connect karein.",
+      expected_impact: "Immediate edge notification with zero cloud transmission lag.",
+      confidence: 0.96,
+      assumptions: ["Arduino connected to USB COM port at 9600 baud"],
+      data_label: "Edge Hardware Telemetry"
+    };
+  }
+
+  // 4. WATER LEAKAGE & FLOW INTELLIGENCE
+  if (q.includes('water') || q.includes('leak') || q.includes('pani') || q.includes('flow') || q.includes('pipe') || q.includes('hostel')) {
+    return {
+      answer: "Current campus water consumption 1,240 LPH hai. Overnight leakage baseline me Hostel 3 riser par 35% abnormal flow detect hua hai.",
+      insight: "Machine learning baseline se +420 LPH excess consumption identify hui hai jo underground pipe fracture ko point karti hai.",
+      cause: "Hostel Block 3 main supply riser me pressure oscillation ke dauran joint leakage.",
+      evidence: [
+        "Overnight Base Flow: 580 LPH (Normal threshold < 160 LPH)",
+        "Zone: Hostel 3 North Shaft",
+        "Acoustic Correlation: High continuous vibration signal"
+      ],
+      prediction: "Agar rectify nahi kiya gaya toh daily 10,080 Liters clean water waste hoga (Cost: ₹1,260/day).",
+      recommendation: "Hostel 3 riser valve V-12 ko isolate karein aur maintenance crew ko dispatch karein.",
+      expected_impact: "Daily 10,000+ liters water saving aur building foundation seepage prevention.",
+      confidence: 0.94,
+      assumptions: ["Ultrasonic flowmeter calibration variance < 2%"],
+      data_label: "Water Infrastructure Intelligence"
+    };
+  }
+
+  // 5. ENERGY, POWER & SOLAR OFFSET
+  if (q.includes('energy') || q.includes('power') || q.includes('solar') || q.includes('bijli') || q.includes('electricity') || q.includes('kwh') || q.includes('kw') || q.includes('tariff') || q.includes('bill')) {
+    return {
+      answer: "Total campus load 412.5 kW hai, jisme se 42.5 kW rooftop solar PV plant se offset ho raha hai. Peak demand Block B labs me concentrated hai.",
+      insight: "Academic Block B laboratory cluster ka HVAC load baseline se 39.5% upar hai high ambient temperature (31°C) ki wajah se.",
+      cause: "High afternoon thermal load combined with simultaneous lab equipment operations.",
+      evidence: [
+        "Grid Import: 370.0 kW",
+        "Solar Clean Generation: 42.5 kW (Renewable share: 10.3%)",
+        "Peak Tariff Window: 14:00 - 18:00 IST (₹8.50/kWh)"
+      ],
+      prediction: "Peak demand window me grid draw ₹36,150 cross karega agar thermal modulation apply nahi hua.",
+      recommendation: "Pre-cool lecture halls at 13:00 aur non-essential laboratory chillers ko 2°C modulate karein.",
+      expected_impact: "Peak demand cut by 45 kW; weekly billing reduction of ₹14,800 aur 1.8 tons CO2 avoided.",
+      confidence: 0.92,
+      assumptions: ["Solar irradiance maintained above 720 W/m²"],
+      data_label: "Energy Decision Intelligence"
+    };
+  }
+
+  // 6. AIR QUALITY, AQI & WEATHER
+  if (q.includes('air') || q.includes('aqi') || q.includes('pm25') || q.includes('pm10') || q.includes('pollution') || q.includes('hawa') || q.includes('smog') || q.includes('weather') || q.includes('temp')) {
+    return {
+      answer: "Current campus Air Quality Index (AQI) 54 (Satisfactory/Good) hai. Ambient temperature 27.8°C aur humidity 58% record hui hai.",
+      insight: "Main Gate intersection ke paas PM2.5 me minor spike (68 µg/m³) detect hua hai peak vehicle arrival time par.",
+      cause: "Vehicular exhaust idling during student and bus transit between 08:30 and 09:15 AM.",
+      evidence: [
+        "PM2.5: 24 µg/m³ campus average (Hotspot: 68 µg/m³ at Main Gate)",
+        "PM10: 48 µg/m³ (CPCB limit: 100 µg/m³)",
+        "CO2 Levels: 412 ppm (Well within ASHRAE indoor safe limits)"
+      ],
+      prediction: "Afternoon breeze (12 km/h East) will naturally disperse particulate matter by 11:30 AM.",
+      recommendation: "Main Gate bus idling strictly minimize karein aur automated green mist sprinklers trigger karein.",
+      expected_impact: "Particulate hotspot PM2.5 reduced to < 35 µg/m³ within 20 minutes.",
+      confidence: 0.95,
+      assumptions: ["CPCB National Ambient Air Quality Standards"],
+      data_label: "Aerosol & Atmospheric Telemetry"
+    };
+  }
+
+  // 7. WASTE MANAGEMENT & SMART BINS
+  if (q.includes('waste') || q.includes('bin') || q.includes('kachra') || q.includes('trash') || q.includes('overflow') || q.includes('garbage')) {
+    return {
+      answer: "Campus me 48 ultrasonic smart waste bins active hain. Canteen Bin #04 currently 88% capacity par hai aur overflow risk me hai.",
+      insight: "Lunch hour disposal rate ke mutabiq Canteen Bin #04 agle 28 minutes me 100% full ho jayega.",
+      cause: "High student influx and takeaway packaging disposal during 12:30 - 14:00 dining cycle.",
+      evidence: [
+        "Bin #04: 88% full (Predicted overflow in ~28 mins)",
+        "Bin #12 (Library): 34% full",
+        "Segregation Efficiency: 82% Wet / Dry organic compliance"
+      ],
+      prediction: "Overflow will trigger littering risk and hygiene compliance alerts under Swachh Campus index.",
+      recommendation: "Sanitation vehicle Route #2 ko auto-dispatch karein for urgent Bin #04 clearance.",
+      expected_impact: "Zero bin overflow risk; collection route fuel efficiency improved by 18%.",
+      confidence: 0.91,
+      assumptions: ["Ultrasonic time-of-flight sensor precision ±2cm"],
+      data_label: "Smart Sanitation & Waste Logistics"
+    };
+  }
+
+  // 8. NOISE & ACOUSTIC COMPLIANCE
+  if (q.includes('noise') || q.includes('decibel') || q.includes('sound') || q.includes('awaz') || q.includes('horn')) {
+    return {
+      answer: "Campus acoustic sensors 58.4 dBA daytime average record kar rahe hain. Library Quiet Zone me threshold 50 dBA maintain hai.",
+      insight: "Workshop fabrication block ke paas cutter equipment ke chalte momentary 74 dBA spike note hua.",
+      cause: "Mechanical workshop pneumatic tooling operations without secondary acoustic shield.",
+      evidence: [
+        "Library Zone: 46.2 dBA (Strictly compliant with CPCB Silent Zone norms)",
+        "Workshop Zone: 74.0 dBA (Permissible for industrial up to 75 dBA)",
+        "Academic Zone: 54.8 dBA"
+      ],
+      prediction: "Daytime average compliance will remain in Class B Institutional Zone safety standards.",
+      recommendation: "Ensure workshop acoustic dampers are closed during afternoon examination hours.",
+      expected_impact: "Disturbance index reduced by 14 dBA across adjacent Block A.",
+      confidence: 0.89,
+      assumptions: ["CPCB Noise Pollution Regulation & Control Rules 2000"],
+      data_label: "Acoustic Surveillance Intelligence"
+    };
+  }
+
+  // 9. BIODIVERSITY, TREES & LAND HEALTH
+  if (q.includes('biodiversity') || q.includes('tree') || q.includes('ped') || q.includes('soil') || q.includes('green') || q.includes('carbon')) {
+    return {
+      answer: "Campus green cover 38.6% hai with 428 geotagged trees, sequestering 142.8 metric tons of carbon annually.",
+      insight: "Soil moisture and pH index 6.8 (Neutral) par hai, indicating high ecological equilibrium.",
+      cause: "Botanical garden herbal reserve and bio-corridor plantations along sports field boundary.",
+      evidence: [
+        "Tree Inventory: 428 specimens (Neem, Peepal, Mango, Ashoka)",
+        "Species Diversity Index: 3.42 (Shannon-Wiener scale)",
+        "Canopy Growth Rate: +4.8% YoY"
+      ],
+      prediction: "Annual carbon sequestration will offset 12.4% of total scope 1 & 2 campus emissions.",
+      recommendation: "Maintain drip irrigation in Herbal reserve; avoid soil compaction near Block B quadrangle.",
+      expected_impact: "Enhanced biodiversity resilience and MoEFCC EIA Category B green score.",
+      confidence: 0.93,
+      assumptions: ["Satellite multispectral NDVI verification"],
+      data_label: "Ecological Baseline Analytics"
+    };
+  }
+
+  // 10. RISKS, THREATS & WHAT TO DO
+  if (q.includes('risk') || q.includes('danger') || q.includes('hazard') || q.includes('threat') || q.includes('what should we do') || q.includes('kya kare') || q.includes('recommendation') || q.includes('action')) {
+    return {
+      answer: "Primary active risk is: (1) Hostel 3 water riser leakage (High severity) aur (2) 14:00 grid peak energy tariff surge.",
+      insight: "Dono issues mitigate ho sakte hain automated solenoid cutoffs aur HVAC setpoint modulation se.",
+      cause: "Mechanical aging in water riser joint + simultaneous afternoon campus power load.",
+      evidence: [
+        "Risk 1: 420 LPH excess overnight water loss in Hostel 3",
+        "Risk 2: Projected peak tariff crossing ₹8.50/kWh at 14:00",
+        "Risk 3: Canteen Bin #04 overflow in ~28 mins"
+      ],
+      prediction: "Aggressive action saves ₹4,200 today and prevents 10,000L water depletion.",
+      recommendation: "Action Center se pre-approved 'Isolate Hostel 3 Valve' aur 'HVAC Load Shave 10%' commands execute karein.",
+      expected_impact: "Mitigates 100% of critical operational environmental risks.",
+      confidence: 0.96,
+      assumptions: ["SOP response time under 15 minutes"],
+      data_label: "Risk Assessment & Mitigation Matrix"
+    };
+  }
+
+  // 11. FUTURE PREDICTIONS / TOMORROW / FORECAST
+  if (q.includes('tomorrow') || q.includes('future') || q.includes('forecast') || q.includes('predict') || q.includes('aage kya hoga')) {
+    return {
+      answer: "Kal ke liye predictive model 510 kW peak power demand forecast kar raha hai at 14:30 IST, with 38 kW solar generation offset.",
+      insight: "Weather forecast ke mutabiq kal maximum temperature 33°C rahega, jisse cooling demand +14% badhegi.",
+      cause: "High thermal gradient between outdoor ambient air and conditioned laboratory zones.",
+      evidence: [
+        "Forecast Model: Linear Regression + Seasonal Fourier Decomposition",
+        "Peak Hour: 14:30 IST (95% Confidence Interval: [488 kW, 532 kW])",
+        "Estimated Energy Cost: ₹38,400 tomorrow"
+      ],
+      prediction: "Pre-cooling campus blocks by 1.5°C before 11:00 AM will flatten the afternoon grid spike.",
+      recommendation: "Enable automated Thermal Energy Storage dispatch from 13:30 to 16:00.",
+      expected_impact: "Peak demand shaved by 52 kW; savings of ₹3,800 tomorrow.",
+      confidence: 0.91,
+      assumptions: ["Weather forecast accuracy 92%"],
+      data_label: "Predictive Machine Learning Engine"
+    };
+  }
+
+  // 12. DYNAMIC / GENERAL INTELLIGENT FALLBACK FOR ANY OTHER QUERY
+  return {
+    answer: `EcoNexus Intelligence analysis for: "${question}". Campus ke 48 IoT nodes aggregate telemetry monitor kar rahe hain. Overall campus sustainability score 78.5/100 hai.`,
+    insight: `Query analysis confirms all ecological, water, energy, and safety parameters are continuously mapped under ISO 14001 EIA standards.`,
+    cause: "Real-time edge telemetry coupled with automated anomaly detection ensures zero undetected environmental deviations.",
+    evidence: [
+      `Query processed: "${question}"`,
+      "System Status: 48 IoT sensor nodes active and streaming",
+      "Current Power: 412.5 kW | Water Flow: 1,240 LPH | AQI: 54",
+      "Edge Node: Physical Arduino Web Serial API ready"
+    ],
+    prediction: "Facility operations stable under predictive envelope; next scheduled report generation in 1 hour.",
+    recommendation: "Detailed domain metrics dekhne ke liye sidebar se Energy, Water, Air Quality, ya EIA Reports visit karein.",
+    expected_impact: "Continuous compliance assurance and real-time operational efficiency.",
+    confidence: 0.90,
+    assumptions: ["Campus operating at normal working capacity"],
+    data_label: "AI Decision-Support System"
+  };
+};
 
 export const mockScenarioResult: ScenarioResult = {
   current: { energy: 412.5, water: 1240, waste: 340, co2: 338.2, cost: 36150, sustainability_score: 78.5 },

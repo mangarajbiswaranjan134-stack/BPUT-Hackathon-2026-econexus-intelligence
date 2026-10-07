@@ -9,6 +9,7 @@ import {
 import { useAppStore } from '../../stores/appStore';
 import { UserRole } from '../../types';
 import clsx from 'clsx';
+import EcoNexusLogo from '../common/EcoNexusLogo';
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard, roles: ['admin', 'operations', 'sustainability'] },
@@ -52,9 +53,7 @@ export default function Sidebar() {
     >
       <div>
         <div className="p-4 flex items-center h-16 border-b border-red-950/40">
-          <div className="w-8 h-8 bg-gradient-to-br from-red-600 to-rose-700 rounded-lg flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(239,68,68,0.6)] border border-white/20">
-            <span className="text-white font-black text-xl tracking-tighter">E</span>
-          </div>
+          <EcoNexusLogo size={34} />
           {sidebarOpen && (
             <span className="ml-3 font-extrabold text-xl text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-red-500 whitespace-nowrap tracking-wide">
               EcoNexus

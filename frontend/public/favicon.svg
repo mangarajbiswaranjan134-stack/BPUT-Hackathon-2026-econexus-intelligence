@@ -1,0 +1,16 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="favCrimson" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#ef4444"/>
+      <stop offset="100%" stopColor="#991b1b"/>
+    </linearGradient>
+    <linearGradient id="favLeaf" x1="24" y1="6" x2="42" y2="38" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#34d399"/>
+      <stop offset="100%" stopColor="#047857"/>
+    </linearGradient>
+  </defs>
+  <polygon points="24,3 41,12 41,34 24,45 7,34 7,12" fill="#140a0e" stroke="#ef4444" stroke-width="2"/>
+  <path d="M12 24 C12 16 18 10 26 10 C32 10 36 14 36 19 C36 24 30 26 24 26 C16 26 12 30 12 35 C12 38 15 41 20 41 C27 41 33 36 36 29" stroke="url(#favCrimson)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M24 10 C30 10 38 14 38 22 C38 30 30 36 24 36 C24 30 28 22 36 18" stroke="url(#favLeaf)" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="24" cy="25" r="3.5" fill="#ffffff"/>
+</svg>

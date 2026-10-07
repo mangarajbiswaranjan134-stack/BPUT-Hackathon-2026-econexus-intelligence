@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { useAppStore } from '../../stores/appStore';
 import { UserRole } from '../../types';
+import EcoNexusLogo from '../common/EcoNexusLogo';
 
 export default function AuthGateway() {
   const { login } = useAppStore();
@@ -70,9 +71,7 @@ export default function AuthGateway() {
       {/* Top Banner */}
       <header className="relative z-10 w-full px-6 py-4 flex items-center justify-between border-b border-red-950/40 bg-[#0c0709]/80 backdrop-blur-md">
         <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 bg-gradient-to-br from-red-600 to-rose-700 rounded-xl flex items-center justify-center shadow-[0_0_18px_rgba(239,68,68,0.6)] border border-white/20">
-            <span className="text-white font-black text-xl">E</span>
-          </div>
+          <EcoNexusLogo size={40} />
           <div>
             <div className="flex items-center space-x-2">
               <span className="font-extrabold text-lg text-transparent bg-clip-text bg-gradient-to-r from-white via-red-100 to-red-400 tracking-wide">

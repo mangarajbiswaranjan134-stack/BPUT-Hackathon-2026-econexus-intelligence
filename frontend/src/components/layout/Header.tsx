@@ -14,7 +14,18 @@ const ALERTS_TICKER = [
 ];
 
 export default function Header() {
-  const { simulationActive, notifications, role, hardwareData, hardwareModalOpen, setHardwareModalOpen, logout, userProfile } = useAppStore();
+  const { 
+    simulationActive, 
+    notifications, 
+    role, 
+    hardwareData, 
+    hardwareModalOpen, 
+    setHardwareModalOpen, 
+    hardwareRibbonOpen,
+    toggleHardwareRibbon,
+    logout, 
+    userProfile 
+  } = useAppStore();
   const [notifOpen, setNotifOpen] = useState(false);
   const [tickerIdx, setTickerIdx] = useState(0);
   const [timeStr, setTimeStr] = useState('');
@@ -95,19 +106,21 @@ export default function Header() {
           )}
         </div>
 
-        {/* Hardware IoT Connect Button */}
+        {/* Hardware IoT Connect Button - Toggles Live Hardware Ribbon Deck */}
         <motion.button
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
-          onClick={() => setHardwareModalOpen(true)}
+          onClick={() => toggleHardwareRibbon()}
           className={`flex items-center space-x-1.5 text-xs font-mono px-3 py-1.5 rounded-xl border transition-all cursor-pointer ${
             hardwareData.connected
               ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.35)]'
               : hardwareData.waterDetected
               ? 'bg-red-500/20 text-red-300 border-red-500/50 animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)]'
+              : hardwareRibbonOpen
+              ? 'bg-red-600/30 text-white border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.4)]'
               : 'bg-[#160d10]/90 text-red-300 border-red-900/60 hover:border-red-500/60'
           }`}
-          title="Connect Physical Hardware (Arduino / ESP32 Sensors)"
+          title={hardwareRibbonOpen ? "Hide Hardware Telemetry Deck" : "Show Physical Hardware Sensors (Arduino USB)"}
         >
           <Cpu size={13} className={hardwareData.connected ? 'text-emerald-400 animate-pulse' : 'text-red-400'} />
           <span className="font-bold tracking-wider">

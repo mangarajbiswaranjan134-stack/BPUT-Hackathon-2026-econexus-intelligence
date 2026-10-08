@@ -51,6 +51,9 @@ interface AppState {
   updateHardwareData: (data: Partial<HardwareSensorData>) => void;
   hardwareModalOpen: boolean;
   setHardwareModalOpen: (open: boolean) => void;
+  hardwareRibbonOpen: boolean;
+  setHardwareRibbonOpen: (open: boolean) => void;
+  toggleHardwareRibbon: () => void;
 }
 
 // Check session storage so opening fresh tab requires login
@@ -119,4 +122,7 @@ export const useAppStore = create<AppState>((set) => ({
   updateHardwareData: (patch) => set((s) => ({ hardwareData: { ...s.hardwareData, ...patch } })),
   hardwareModalOpen: false,
   setHardwareModalOpen: (open) => set({ hardwareModalOpen: open }),
+  hardwareRibbonOpen: false,
+  setHardwareRibbonOpen: (open) => set({ hardwareRibbonOpen: open }),
+  toggleHardwareRibbon: () => set((s) => ({ hardwareRibbonOpen: !s.hardwareRibbonOpen })),
 }));

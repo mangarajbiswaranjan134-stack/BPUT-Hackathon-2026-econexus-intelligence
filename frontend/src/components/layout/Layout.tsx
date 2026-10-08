@@ -12,7 +12,7 @@ import { useAppStore } from '../../stores/appStore';
 export default function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { hardwareModalOpen, setHardwareModalOpen } = useAppStore();
+  const { hardwareModalOpen, setHardwareModalOpen, hardwareRibbonOpen, setHardwareRibbonOpen } = useAppStore();
   const isCopilotPage = location.pathname === '/copilot';
 
   return (
@@ -51,8 +51,23 @@ export default function Layout() {
         <Header />
         
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 z-0 relative">
-          {/* Live Physical IoT Hardware Sensor HUD Ribbon */}
-          <LiveHardwareRibbon onOpenModal={() => setHardwareModalOpen(true)} />
+          {/* Live Physical IoT Hardware Sensor HUD Ribbon - Appears only when toggled from Header */}
+          <AnimatePresence>
+            {hardwareRibbonOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, y: -10 }}
+                animate={{ opacity: 1, height: 'auto', y: 0 }}
+                exit={{ opacity: 0, height: 0, y: -10 }}
+                transition={{ duration: 0.25 }}
+                className="mb-4"
+              >
+                <LiveHardwareRibbon 
+                  onOpenModal={() => setHardwareModalOpen(true)} 
+                  onClose={() => setHardwareRibbonOpen(false)}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <Suspense fallback={<LoadingSkeleton className="w-full h-full min-h-[500px]" />}>
             <AnimatePresence mode="wait">

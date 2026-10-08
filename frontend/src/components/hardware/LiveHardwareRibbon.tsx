@@ -13,16 +13,18 @@ import {
   Zap, 
   Volume2, 
   RefreshCw,
-  Sparkles
+  Sparkles,
+  X
 } from 'lucide-react';
 import { useAppStore } from '../../stores/appStore';
 import { hardwareBridge } from '../../utils/hardwareBridge';
 
 interface LiveHardwareRibbonProps {
   onOpenModal: () => void;
+  onClose?: () => void;
 }
 
-export default function LiveHardwareRibbon({ onOpenModal }: LiveHardwareRibbonProps) {
+export default function LiveHardwareRibbon({ onOpenModal, onClose }: LiveHardwareRibbonProps) {
   const { hardwareData, updateHardwareData } = useAppStore();
   const [isExpanded, setIsExpanded] = useState(true);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -168,6 +170,16 @@ export default function LiveHardwareRibbon({ onOpenModal }: LiveHardwareRibbonPr
           >
             {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </button>
+
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="p-1 rounded-lg hover:bg-red-950/80 text-zinc-400 hover:text-red-400 border border-transparent hover:border-red-900/60 transition ml-1 cursor-pointer"
+              title="Hide Hardware Telemetry Deck"
+            >
+              <X size={16} />
+            </button>
+          )}
         </div>
       </div>
 
